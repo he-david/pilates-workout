@@ -12,7 +12,7 @@ function renderAt(path: string) {
 
 describe('App routes', () => {
   it.each([
-    ['/', 'Ma'],
+    ['/', /^Ma/],
     ['/program', 'Program'],
     ['/log', 'Napló'],
     ['/session/s1', 'Edzés s1'],

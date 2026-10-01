@@ -64,7 +64,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/domain/schedule.ts`: `nextSession(program, logs)` (first without a log), `sessionStatus`, `weekView(settings, logs, today)` (Mon–Sun, done/today/planned), `programProgress` (n / 36, %, current week/phase), `currentStreak`. Time passed in. Exhaustive tests.
   - Commit: `feat(domain): add completion-based schedule`
 
-- [ ] **T10** · ui · Today screen · UI
+- [x] **T10** · ui · Today screen · UI
   - Per `01-today.dc.html`: date header, streak pill, accent hero card (week · slot · n/3, title, what's new, minutes, exercise count, equipment, "Edzés megnyitása"), "Ez a hét" week strip, phase progress bars + program link, info card (assessment hint), reminder card (H · Cs · Szo, 18:30), bottom nav. Data from content + schedule (logs empty until M4 → read through a `data/` hook that returns `[]` for now).
   - Commit: `feat(today): build today screen from program content`
 

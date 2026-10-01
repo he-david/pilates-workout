@@ -67,3 +67,9 @@ Format:
 ## 2026-10-01 · T09 · Schedule · done
 - `domain/schedule.ts`: nextSession, sessionStatus (done/next/upcoming), weekView (days with done/today/planned/missed/rest, doneCount over training days), programProgress, currentStreak. Program passed in; logs matched by local calendar day of finishedAt (DST-tested).
 - Streak rule (plan silent, chosen): consecutive planned training days back from today each with ≥1 log; rest days never break; today pending doesn't break; extra sessions on rest days neither add nor break. Review: training on Tue instead of Mon breaks streak — revisit if too strict in real use.
+
+## 2026-10-01 · T10 · Today screen · done
+- `screens/TodayScreen` + `screens/today/{HeroCard,WeekStrip,PhaseCard,ReminderCard,headline}`; pure helpers in `domain/todaySummary.ts` (what's-new from isNew + week-over-week dose diff, max 2 names per part then "+N további"; slot n/3; equipment; phase hint).
+- `data/` stubs: useLogs → [] (dev-only `?devDone=N` seeds fake logs, stripped from prod build), useSettings → `defaultSettings(today)` (Mon/Thu/Sat, 18:30), useToday reads clock. T15/T18 replace stubs; reminder toggle is local state only → wire to settings in T18.
+- h1 varies by day status; three phrasings invented ("Mára megvagy, szép munka", "Ma pihenőnap van", "Végigcsináltad a programot").
+- Validator pass. Minors left: what's-new is 3 lines vs design 2; meta row single line because w03-b equipment is "Matrac" only (design shows "Matrac + kis labda" — phase 1 is mat-only by T08 content; reconcile during content review).
