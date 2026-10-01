@@ -138,3 +138,8 @@ Format:
 - Validator pass on fresh DB: Today → overview → player (all w01-a steps) → auto-navigate to finish → save → Today shows w01-b, 1/36, streak 1; Program and overview show done. Mid-step reload restored paused. Console clean. No code changes.
 - Measured "11 / 14 gyakorlat": timed steps skipped via "Következő" don't count as completed (by design: skip ≠ done). OPEN product decision for user: should stopping a timed hold early (or skipping its remaining time) still give credit? Option: treat next on a timed step after ≥50% of its time as done.
 - "1. hét · e hét" label is design 02 copy (kept).
+
+## 2026-10-01 · T22 · Stats · done
+- `domain/stats.ts`: totalSeconds, calendarCells (arbitrary from..to range, Mon-first, null blanks; done/today/planned/missed/none; planned capped to remaining sessions), rangeTitle, ratingWeeks, ratingTrend (last 2 weeks vs previous 2, ±0.5 threshold; <3 sessions → "few"), assessmentRecords, computeStats bundle (reuses currentStreak/programProgress).
+- Records: plank from existing `SessionLog.bestHoldSec['forearm-plank']`; new optional `SessionLog.bestReps['roll-up']` (non-indexed, no Dexie bump — verified schema). First vs latest assessment log. Design's 3rd record (Százas fej lent → fej fent) not derived — no data field.
+- Follow-up: nothing captures bestHoldSec/bestReps yet → Finish screen on assessment weeks 4/8/12 needs input fields (not in any task; add to T23 or later). Until then "Fejlődés" stays empty.

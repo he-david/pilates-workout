@@ -60,6 +60,8 @@ export type SessionLog = {
   areas: string[]
   note?: string
   bestHoldSec?: Record<string, number>
+  /** Best clean repetitions per exerciseId, captured in assessment weeks (e.g. roll-up). */
+  bestReps?: Record<string, number>
 }
 
 export type Settings = {

@@ -119,7 +119,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
 
 ## M5 · Log and stats
 
-- [ ] **T22** · domain · Stats
+- [x] **T22** · domain · Stats
   - `src/domain/stats.ts`: streak, total time, sessions done / 36, calendar cells (done / planned / today) for a month range, rating series per session grouped by week, trend sentence, records from assessment weeks (plank hold, clean Roll Up reps: from → to). Tests.
   - Commit: `feat(domain): add stats from session logs`
 
