@@ -133,3 +133,8 @@ Format:
 - Audit: Today/Program/Exercise already correct on live Dexie logs; now covered by 8 integration tests (`tests/loggedProgress.test.tsx`, real saveLog, no dev seed). Edge cases: session logged twice counts once, non-training-day log harmless, unknown sessionId ignored, 36/36 → "Végigcsináltad a programot".
 - New: `schedule.lastLogOf`, `format.shortDate`; SessionScreen waits for logs, shows pink "✓ Kész · október 1." chip and "Újra" button for a logged session (design 03 has no done state).
 - Validator pass on real flow (skip ≠ completed confirmed); reminder toggle persists across reload.
+
+## 2026-10-01 · T21 · End-to-end flow · done
+- Validator pass on fresh DB: Today → overview → player (all w01-a steps) → auto-navigate to finish → save → Today shows w01-b, 1/36, streak 1; Program and overview show done. Mid-step reload restored paused. Console clean. No code changes.
+- Measured "11 / 14 gyakorlat": timed steps skipped via "Következő" don't count as completed (by design: skip ≠ done). OPEN product decision for user: should stopping a timed hold early (or skipping its remaining time) still give credit? Option: treat next on a timed step after ≥50% of its time as done.
+- "1. hét · e hét" label is design 02 copy (kept).

@@ -114,7 +114,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Done states, next session = first without log, week strip, n / 36 counts, streak pill, "Te legutóbb" on exercise detail.
   - Commit: `feat(ui): show logged progress across screens`
 
-- [ ] **T21** · validate · End-to-end flow · UI
+- [x] **T21** · validate · End-to-end flow · UI
   - ui-validator: fresh DB → Today → Edzés megnyitása → Indítás → complete all steps (skip timers) → rating/areas/note → Mentés → session shows done on Today and Program, next session becomes today's. Implementer fixes findings if any (then commit `fix(...)`), otherwise no commit; mark done.
 
 ## M5 · Log and stats
