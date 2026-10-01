@@ -7,6 +7,7 @@ import {
   doseLabel,
   doseShort,
   durationLabel,
+  totalTimeLabel,
   minutesLabel,
   minutesShort,
   monthName,
@@ -112,5 +113,18 @@ describe('names', () => {
 describe('shortDate', () => {
   it('formats month and day', () => {
     expect(shortDate(new Date(2026, 9, 1))).toBe('október 1.')
+  })
+})
+
+describe('totalTimeLabel', () => {
+  it.each([
+    [0, '0 p'],
+    [59, '0 p'],
+    [3080, '51 p'],
+    [3600, '1 ó 0 p'],
+    [24720, '6 ó 52 p'],
+    [-5, '0 p'],
+  ])('%i s -> %s', (s, expected) => {
+    expect(totalTimeLabel(s)).toBe(expected)
   })
 })

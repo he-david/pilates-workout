@@ -73,6 +73,12 @@ export function durationLabel(seconds: number): string {
   return `${Math.floor(total / 60)}:${pad2(total % 60)}`
 }
 
+/** Cumulative time, always in words: "0 p", "51 p", "6 ó 52 p". */
+export function totalTimeLabel(seconds: number): string {
+  const minutes = Math.floor(Math.max(0, Math.round(seconds)) / 60)
+  return minutes >= 60 ? `${Math.floor(minutes / 60)} ó ${minutes % 60} p` : `${minutes} p`
+}
+
 /** Day index 0 = Sunday .. 6 = Saturday (Date.getDay). */
 export function dayNameLong(dayIndex: number): string {
   return DAYS_LONG[dayIndex] ?? ''

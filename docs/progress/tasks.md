@@ -123,7 +123,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/domain/stats.ts`: streak, total time, sessions done / 36, calendar cells (done / planned / today) for a month range, rating series per session grouped by week, trend sentence, records from assessment weeks (plank hold, clean Roll Up reps: from → to). Tests.
   - Commit: `feat(domain): add stats from session logs`
 
-- [ ] **T23** · ui · Log screen · UI
+- [x] **T23** · ui · Log screen · UI
   - Per `07-log.dc.html`: streak + total time tiles, n / 36, month calendar (Kész / Tervezett legend), rating bar chart with week labels and trend text, "Fejlődés" records list. Empty states when no logs.
   - Commit: `feat(log): build log and progress screen`
 

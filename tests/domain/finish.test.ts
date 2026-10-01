@@ -1,4 +1,10 @@
-import { AREA_OPTIONS, buildLog, RATING_OPTIONS, streakWithPending } from '../../src/domain/finish'
+import {
+  AREA_OPTIONS,
+  buildLog,
+  parseMeasure,
+  RATING_OPTIONS,
+  streakWithPending,
+} from '../../src/domain/finish'
 import type { FinishSummary } from '../../src/domain/player'
 
 const summary: FinishSummary = {
@@ -55,5 +61,44 @@ describe('exerciseCount', () => {
     const s = getSession('w01-a')
     if (!s) throw new Error('missing')
     expect(exerciseCount(s)).toBeGreaterThan(5)
+  })
+})
+
+describe('assessment measures', () => {
+  it.each([
+    ['42', 600, 42],
+    [' 7 ', 100, 7],
+    ['', 100, undefined],
+    ['0', 100, undefined],
+    ['-3', 100, undefined],
+    ['4.5', 100, undefined],
+    ['abc', 100, undefined],
+    ['101', 100, undefined],
+    [undefined, 100, undefined],
+  ])('parseMeasure(%j, %i)', (text, max, want) => {
+    expect(parseMeasure(text, max)).toBe(want)
+  })
+
+  it('stores valid plank hold and roll up reps in the log', () => {
+    const log = buildLog(summary, {
+      rating: 3,
+      areas: [],
+      note: '',
+      plankSec: '40',
+      rollUpReps: '8',
+    })
+    expect(log.bestHoldSec).toEqual({ 'forearm-plank': 40 })
+    expect(log.bestReps).toEqual({ 'roll-up': 8 })
+  })
+  it('omits blank or invalid measures', () => {
+    const log = buildLog(summary, {
+      rating: 3,
+      areas: [],
+      note: '',
+      plankSec: '',
+      rollUpReps: 'x',
+    })
+    expect('bestHoldSec' in log).toBe(false)
+    expect('bestReps' in log).toBe(false)
   })
 })

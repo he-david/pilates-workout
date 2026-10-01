@@ -72,4 +72,31 @@ describe('FinishScreen', () => {
       durationSec: 3080,
     })
   })
+
+  it('hides the measurements outside assessment weeks', () => {
+    renderFinish(summary)
+    expect(screen.queryByLabelText('Plank tartás (mp)')).toBeNull()
+  })
+
+  it('saves assessment measurements', async () => {
+    const user = userEvent.setup()
+    const w4 = { ...summary, sessionId: 'w04-a' }
+    render(
+      <MemoryRouter initialEntries={[{ pathname: '/finish/w04-a', state: w4 }]}>
+        <Routes>
+          <Route path="/finish/:id" element={<FinishScreen />} />
+          <Route path="*" element={<Where />} />
+        </Routes>
+      </MemoryRouter>,
+    )
+    const plank = screen.getByLabelText('Plank tartás (mp)')
+    expect(plank).toHaveAttribute('inputmode', 'numeric')
+    await user.type(plank, '40')
+    await user.type(screen.getByLabelText('Tiszta Roll Up ismétlés'), '-5')
+    await user.click(screen.getByRole('button', { name: 'Mentés a naplóba' }))
+    await waitFor(() => expect(screen.getByTestId('where')).toHaveTextContent('/'))
+    const [log] = await listLogs()
+    expect(log?.bestHoldSec).toEqual({ 'forearm-plank': 40 })
+    expect(log?.bestReps).toBeUndefined()
+  })
 })

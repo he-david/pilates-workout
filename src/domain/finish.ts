@@ -1,5 +1,6 @@
 import { buildSteps, type FinishSummary } from './player'
 import { currentStreak } from './schedule'
+import { PLANK_ID, ROLL_UP_ID } from './stats'
 import type { ProgramSession, Rating, SessionLog, Settings } from './types'
 
 export type RatingOption = { value: Rating; short: string; label: string; hint: string }
@@ -42,7 +43,26 @@ export const AREA_OPTIONS: readonly string[] = ['Has', 'Hát', 'Far', 'Comb', 'V
 /** Rating preselected on the finish screen ("Pont jó"), as in the design. */
 export const DEFAULT_RATING: Rating = 3
 
-export type FinishForm = { rating: Rating; areas: readonly string[]; note: string }
+export type FinishForm = {
+  rating: Rating
+  areas: readonly string[]
+  note: string
+  /** Assessment weeks only, raw input text: plank hold in seconds. */
+  plankSec?: string
+  /** Assessment weeks only, raw input text: clean Roll Up repetitions. */
+  rollUpReps?: string
+}
+
+export const MAX_PLANK_SEC = 600
+export const MAX_ROLL_UP_REPS = 100
+
+/** Whole number 1..max from input text; blank, decimals, negatives, zero and overflow give undefined. */
+export function parseMeasure(text: string | undefined, max: number): number | undefined {
+  const t = (text ?? '').trim()
+  if (!/^\d{1,4}$/.test(t)) return undefined
+  const n = Number(t)
+  return n >= 1 && n <= max ? n : undefined
+}
 
 /** Builds the log to store; areas keep canonical order, an empty note is omitted. */
 export function buildLog(summary: FinishSummary, form: FinishForm): SessionLog {
@@ -58,6 +78,10 @@ export function buildLog(summary: FinishSummary, form: FinishForm): SessionLog {
     areas: AREA_OPTIONS.filter((a) => form.areas.includes(a)),
   }
   if (note) log.note = note
+  const hold = parseMeasure(form.plankSec, MAX_PLANK_SEC)
+  if (hold !== undefined) log.bestHoldSec = { [PLANK_ID]: hold }
+  const reps = parseMeasure(form.rollUpReps, MAX_ROLL_UP_REPS)
+  if (reps !== undefined) log.bestReps = { [ROLL_UP_ID]: reps }
   return log
 }
 

@@ -9,6 +9,7 @@ import type { FinishSummary } from '../domain/player'
 import type { Rating } from '../domain/types'
 import { Button, Icon } from '../ui'
 import { AreaChips } from './finish/AreaChips'
+import { MeasureFields } from './finish/MeasureFields'
 import { RatingPicker } from './finish/RatingPicker'
 import { StatTile } from './finish/StatTile'
 
@@ -42,11 +43,14 @@ function FinishForm({ summary }: { summary: FinishSummary }) {
   const [rating, setRating] = useState<Rating>(DEFAULT_RATING)
   const [areas, setAreas] = useState<string[]>([])
   const [note, setNote] = useState('')
+  const [plankSec, setPlankSec] = useState('')
+  const [rollUpReps, setRollUpReps] = useState('')
   const [saving, setSaving] = useState(false)
   const [failed, setFailed] = useState(false)
   const busy = useRef(false)
 
-  const form = { rating, areas, note }
+  const assessment = session?.isAssessment === true
+  const form = assessment ? { rating, areas, note, plankSec, rollUpReps } : { rating, areas, note }
   const pending = buildLog(summary, form)
   const streak = logs ? streakWithPending(settings, logs, pending, today) : undefined
 
@@ -98,6 +102,14 @@ function FinishForm({ summary }: { summary: FinishSummary }) {
 
       <RatingPicker value={rating} onChange={setRating} />
       <AreaChips selected={areas} onToggle={toggleArea} />
+      {assessment && (
+        <MeasureFields
+          plankSec={plankSec}
+          rollUpReps={rollUpReps}
+          onPlankSec={setPlankSec}
+          onRollUpReps={setRollUpReps}
+        />
+      )}
 
       <section className="flex flex-col gap-2">
         <label htmlFor="jegyzet" className="text-xl font-extrabold">

@@ -143,3 +143,9 @@ Format:
 - `domain/stats.ts`: totalSeconds, calendarCells (arbitrary from..to range, Mon-first, null blanks; done/today/planned/missed/none; planned capped to remaining sessions), rangeTitle, ratingWeeks, ratingTrend (last 2 weeks vs previous 2, ±0.5 threshold; <3 sessions → "few"), assessmentRecords, computeStats bundle (reuses currentStreak/programProgress).
 - Records: plank from existing `SessionLog.bestHoldSec['forearm-plank']`; new optional `SessionLog.bestReps['roll-up']` (non-indexed, no Dexie bump — verified schema). First vs latest assessment log. Design's 3rd record (Százas fej lent → fej fent) not derived — no data field.
 - Follow-up: nothing captures bestHoldSec/bestReps yet → Finish screen on assessment weeks 4/8/12 needs input fields (not in any task; add to T23 or later). Until then "Fejlődés" stays empty.
+
+## 2026-10-01 · T23 · Log screen · done
+- `screens/LogScreen` + `log/{StatTiles,CalendarCard,RatingChart,RecordsCard}`; `stats.calendarWindow(today)` = 2 weeks back + current + 1 ahead (matches design grid); `format.totalTimeLabel` ("0 p", "6 ó 52 p"). Chart: last 4 weeks grouped by "N. hét"; trend over all weeks. Missed days styled like none (legend only Kész/Tervezett). Empty states per section.
+- Scope addition (T22 follow-up): Finish screen on assessment sessions shows "Felmérő eredmények" with "Plank tartás (mp)" → bestHoldSec['forearm-plank'] and "Tiszta Roll Up ismétlés" → bestReps['roll-up'] (16px, numeric, parsed in domain; invalid/blank dropped silently).
+- Dev seed: ratings cycle 3,2,3,2,…; weeks 4/8 seed assessment values (records visible at `/log?devDone=26`).
+- Validator fix round 1: calendar window, duplicate empty message, "0:00" total → "0 p". Re-check pass.

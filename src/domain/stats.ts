@@ -1,4 +1,4 @@
-import { durationLabel, monthName } from './format'
+import { monthName, totalTimeLabel } from './format'
 import { currentStreak, programProgress } from './schedule'
 import type { ProgramSession, Rating, SessionLog, Settings } from './types'
 
@@ -82,6 +82,12 @@ export function calendarCells(
   }
   while (cells.length % 7 !== 0) cells.push(null)
   return cells
+}
+
+/** 4 Monday-first weeks: two before the current week, the current one and the next (as in the design) (what the Log calendar shows). */
+export function calendarWindow(today: Date): { from: Date; to: Date } {
+  const monday = addDays(today, -((today.getDay() + 6) % 7))
+  return { from: addDays(monday, -14), to: addDays(monday, 13) }
 }
 
 /** "Szeptember – október" (one name when both ends fall in the same month). */
@@ -187,7 +193,7 @@ export function computeStats(
   return {
     streak: currentStreak(settings, logs, today),
     totalSec,
-    totalLabel: durationLabel(totalSec),
+    totalLabel: totalTimeLabel(totalSec),
     done: progress.done,
     total: progress.total,
     weeks,

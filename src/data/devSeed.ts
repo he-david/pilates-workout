@@ -1,5 +1,16 @@
 import { sessionItems } from '../domain/todaySummary'
-import type { ProgramSession, SessionLog } from '../domain/types'
+import type { ProgramSession, Rating, SessionLog } from '../domain/types'
+
+const RATINGS: readonly Rating[] = [3, 2, 3, 2, 3, 3, 2, 3]
+
+/** Week 4 baseline (plank 25 s, easier Roll Up), later assessments improve. */
+function assessmentFixture(week: number): Partial<SessionLog> {
+  if (week <= 4) return { bestHoldSec: { 'forearm-plank': 25 }, usedEasier: ['roll-up'] }
+  return {
+    bestHoldSec: { 'forearm-plank': week >= 12 ? 55 : 40 },
+    bestReps: { 'roll-up': week >= 12 ? 12 : 8 },
+  }
+}
 
 /**
  * Dev-only fixture: `n` finished sessions on the latest training days before `today`
@@ -20,6 +31,7 @@ export function seedLogs(
     const session = program[i]
     if (!session) return []
     const finished = d.toISOString()
+    const assessment = session.isAssessment ? assessmentFixture(session.week) : {}
     return [
       {
         sessionId: session.id,
@@ -28,8 +40,9 @@ export function seedLogs(
         durationSec: 3000,
         completed: sessionItems(session).map((item) => item.exerciseId),
         usedEasier: [],
-        rating: 4,
+        rating: RATINGS[i % RATINGS.length] ?? 3,
         areas: [],
+        ...assessment,
       } satisfies SessionLog,
     ]
   })

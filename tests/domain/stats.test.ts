@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   assessmentRecords,
   calendarCells,
+  calendarWindow,
   computeStats,
   rangeTitle,
   ratingTrend,
@@ -178,5 +179,19 @@ describe('assessmentRecords', () => {
       from: '3 tiszta ism.',
       to: '8 tiszta ism.',
     })
+  })
+})
+
+describe('calendarWindow', () => {
+  it.each([
+    ['Thursday', new Date(2026, 9, 1), '2026-09-14', '2026-10-11'],
+    ['Monday', new Date(2026, 9, 5), '2026-09-21', '2026-10-18'],
+    ['Sunday', new Date(2026, 9, 11), '2026-09-21', '2026-10-18'],
+  ])('%s', (_n, today, from, to) => {
+    const w = calendarWindow(today)
+    const key = (d: Date) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    expect([key(w.from), key(w.to)]).toEqual([from, to])
+    expect(w.from.getDay()).toBe(1)
   })
 })
