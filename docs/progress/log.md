@@ -100,3 +100,8 @@ Format:
 - Frozen tab: tick crosses at most one boundary; next timer restarts from `now` → never silently skips exercises.
 - useEasier marks all remaining sets of the item done + records exerciseId. skip ≠ done (skipped not in completed).
 - PlayerSnapshot revised: `{sessionId, index, at, endsAt?|pausedRemaining?, doneSteps, usedEasier, elapsedMs}`. Restore always lands paused; expired time step restarts full duration. UI (T17) dispatches restore after createPlayer and saves toSnapshot at transitions/pauses.
+
+## 2026-10-01 · T15 · Dexie database and player resume store · done
+- `data/db.ts` Dexie v1: logs `++id, sessionId, finishedAt`; settings `id` (single row); player out-of-line key `active`. `data/settings.ts` getSettings / idempotent initSettings(today) / saveSettings; `data/player.ts` save/load/clear snapshot + `useSnapshot()` (undefined loading, null none).
+- `platform/storage.ts` requestPersistence (feature-detected, never throws), called once in main.tsx.
+- Follow-up T18: useSettings/useLogs still stubs; nothing calls initSettings at app start yet → wire in T18 (start date must be persisted on first run).

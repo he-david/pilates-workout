@@ -87,7 +87,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/domain/player.ts`: flatten session to steps; state machine (idle → running ↔ paused → transition → … → finished); actions start/pause/resume/done/skip/prev/tick/useEasier/restore; time items store `endsAt` (ms), remaining = endsAt − now (now passed in); rep items show estSeconds as soft guide, advance only with Kész; 10 s skippable "Következő: …" transition; sets for time items; snapshot `{sessionId, index, endsAt | pausedRemaining}` serialisation. Exhaustive tests incl. throttled/frozen tab (large now jumps).
   - Commit: `feat(domain): add workout player reducer with timestamp timer`
 
-- [ ] **T15** · data · Dexie database and player resume store
+- [x] **T15** · data · Dexie database and player resume store
   - `src/data/db.ts`: Dexie v1 schema (`logs`, `settings`, `player`); `src/data/player.ts`: save/load/clear snapshot; `src/data/settings.ts`: get/init settings (start date, training days Mon/Thu/Sat, reminder 18:30); call `navigator.storage.persist()` via `platform/`. Tests with `fake-indexeddb`.
   - Commit: `feat(data): add dexie schema and player resume store`
 
