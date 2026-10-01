@@ -80,11 +80,21 @@ export type Prescription = {
   notes: string[]
 }
 
+/** Saved at every transition and pause so a closed app can resume in place. */
 export type PlayerSnapshot = {
   sessionId: string
+  /** index into the flattened step list */
   index: number
+  /** whether `index` is the step being performed or the upcoming step in a transition */
+  at: 'step' | 'transition'
   /** ms timestamp when the running timer ends; absent while paused */
   endsAt?: number
   /** ms left when paused; absent while running */
   pausedRemaining?: number
+  /** indexes of finished steps */
+  doneSteps: number[]
+  /** exerciseIds done with the easier variant */
+  usedEasier: string[]
+  /** active workout time (pauses excluded) at the moment of saving */
+  elapsedMs: number
 }

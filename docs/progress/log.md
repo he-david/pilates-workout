@@ -93,3 +93,10 @@ Format:
 - "Te legutóbb": SessionLog has no per-exercise dose → uses prescribed dose of latest completed session containing the exercise; hidden when none. Dev seed now fills `completed`.
 - Not built (no behaviour defined yet): design's "Csere másikra", "Könnyítést kérek" buttons; fake media pills omitted. Revisit in T25 (easier variant).
 - Validator: spot-check walked all exercises of w01-a, w06-b, w12-c — no errors. Fix round 1: Roll Up mistake em dash (content now matches design), duplicate "kb." on time doses, link tap height. Re-check pass.
+
+## 2026-10-01 · T14 · Player reducer and timing · done
+- `domain/player.ts`: buildSteps (one step per set for time items; rep items one step, estSeconds soft guide, advance only on done), createPlayer, playerReducer, toSnapshot, selectors (currentStep, upNext, remainingMs, progress, blockProgress, completedExerciseIds, elapsedMs excl. pauses).
+- 10 s skippable transition between every step incl. sets (doubles as rest; plan silent on set rest). In transition `index` = upcoming step.
+- Frozen tab: tick crosses at most one boundary; next timer restarts from `now` → never silently skips exercises.
+- useEasier marks all remaining sets of the item done + records exerciseId. skip ≠ done (skipped not in completed).
+- PlayerSnapshot revised: `{sessionId, index, at, endsAt?|pausedRemaining?, doneSteps, usedEasier, elapsedMs}`. Restore always lands paused; expired time step restarts full duration. UI (T17) dispatches restore after createPlayer and saves toSnapshot at transitions/pauses.

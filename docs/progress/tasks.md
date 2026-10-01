@@ -83,7 +83,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
 
 ## M3 · Workout player
 
-- [ ] **T14** · domain · Player reducer and timing
+- [x] **T14** · domain · Player reducer and timing
   - `src/domain/player.ts`: flatten session to steps; state machine (idle → running ↔ paused → transition → … → finished); actions start/pause/resume/done/skip/prev/tick/useEasier/restore; time items store `endsAt` (ms), remaining = endsAt − now (now passed in); rep items show estSeconds as soft guide, advance only with Kész; 10 s skippable "Következő: …" transition; sets for time items; snapshot `{sessionId, index, endsAt | pausedRemaining}` serialisation. Exhaustive tests incl. throttled/frozen tab (large now jumps).
   - Commit: `feat(domain): add workout player reducer with timestamp timer`
 
