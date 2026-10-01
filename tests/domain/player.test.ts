@@ -7,6 +7,7 @@ import {
   createPlayer,
   currentStep,
   elapsedMs,
+  finishSummary,
   playerReducer,
   progress,
   remainingMs,
@@ -404,4 +405,30 @@ describe('inactive phases ignore actions', () => {
       expect(playerReducer(s, { type, now: T0 })).toBe(s)
     },
   )
+})
+
+describe('manual finish', () => {
+  it('ignores finish while idle or already finished', () => {
+    expect(playerReducer(fresh(), { type: 'finish', now: T0 }).phase).toBe('idle')
+    const f = playerReducer(started(), { type: 'finish', now: T0 + 1000 })
+    expect(playerReducer(f, { type: 'finish', now: T0 + 5000 }).finishedAt).toBe(T0 + 1000)
+  })
+  it('finishes mid-session, also from pause, and summarises', () => {
+    const s = run(
+      started(),
+      { type: 'done', now: T0 + 2000 },
+      { type: 'skip', now: T0 + 3000 },
+      { type: 'pause', now: T0 + 4000 },
+      { type: 'finish', now: T0 + 14_000 },
+    )
+    expect(s.phase).toBe('finished')
+    expect(finishSummary(s, T0 + 99_000)).toEqual({
+      sessionId: 'w1-a',
+      startedAt: T0,
+      finishedAt: T0 + 14_000,
+      durationSec: 4,
+      completed: ['a'],
+      usedEasier: [],
+    })
+  })
 })

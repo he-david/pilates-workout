@@ -16,7 +16,14 @@ import { Icon } from '../../ui'
 
 const nameOf = (id: string) => getExercise(id)?.nameHu ?? id
 
-export function HeroCard({ session }: { session: ProgramSession }) {
+/** `resume`: a saved player snapshot exists for this session, so the main action is "Folytatás". */
+export function HeroCard({
+  session,
+  resume = false,
+}: {
+  session: ProgramSession
+  resume?: boolean
+}) {
   const news = whatsNewText(session, previousSameSlot(program, session), nameOf)
   return (
     <section className="flex flex-col gap-3.5 rounded-4xl bg-accent p-[22px] text-ink">
@@ -35,11 +42,24 @@ export function HeroCard({ session }: { session: ProgramSession }) {
         <div>{sessionItems(session).length} gyakorlat</div>
         <div>{equipmentLabel(sessionEquipment(session, exercises))}</div>
       </div>
+      {resume && (
+        <Link
+          to={`/player/${session.id}`}
+          className="flex h-[52px] touch-manipulation items-center justify-center gap-2 rounded-xl bg-surface text-lg font-extrabold text-accent-ink no-underline"
+        >
+          <Icon name="play" size={18} />
+          <span>Folytatás</span>
+        </Link>
+      )}
       <Link
         to={`/session/${session.id}`}
-        className="flex h-[52px] touch-manipulation items-center justify-center gap-2 rounded-xl bg-surface text-lg font-extrabold text-accent-ink no-underline"
+        className={
+          resume
+            ? 'flex min-h-11 touch-manipulation items-center justify-center text-md font-bold text-ink underline'
+            : 'flex h-[52px] touch-manipulation items-center justify-center gap-2 rounded-xl bg-surface text-lg font-extrabold text-accent-ink no-underline'
+        }
       >
-        <Icon name="play" size={18} />
+        {!resume && <Icon name="play" size={18} />}
         <span>Edzés megnyitása</span>
       </Link>
     </section>

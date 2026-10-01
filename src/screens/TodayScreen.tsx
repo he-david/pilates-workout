@@ -1,5 +1,6 @@
 import { program, WEEKS } from '../content/program'
 import { useLogs, useSettings, useToday } from '../data'
+import { useSnapshot } from '../data/player'
 import { dayNameLong, dateHeader } from '../domain/format'
 import { currentStreak, programProgress, weekView } from '../domain/schedule'
 import { weekFractions } from '../domain/todaySummary'
@@ -14,6 +15,7 @@ export function TodayScreen() {
   const today = useToday()
   const settings = useSettings(today)
   const logs = useLogs(today)
+  const snapshot = useSnapshot()
 
   const progress = programProgress(program, logs)
   const week = weekView(settings, logs, today)
@@ -49,7 +51,9 @@ export function TodayScreen() {
           </div>
         )}
       </header>
-      {progress.next && <HeroCard session={progress.next} />}
+      {progress.next && (
+        <HeroCard session={progress.next} resume={snapshot?.sessionId === progress.next.id} />
+      )}
       <WeekStrip week={week} nextLabel={nextLabel} />
       <PhaseCard progress={progress} fractions={weekFractions(program, logs, WEEKS)} />
       <ReminderCard trainingDays={settings.trainingDays} time={settings.reminderTime ?? '18:30'} />

@@ -95,7 +95,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/platform/wakeLock.ts` (request, re-acquire on `visibilitychange`, muted looping-video fallback), `src/platform/sound.ts` (Web Audio unlock on first tap, 3-2-1 beeps, end chime), `src/platform/visibility.ts` helper. Unit tests with mocks where feasible.
   - Commit: `feat(platform): add wake lock and web audio cues`
 
-- [ ] **T17** · ui · Player screen · UI
+- [x] **T17** · ui · Player screen · UI
   - Per `05-player.dc.html`: block label + position, segment progress, names + dose, ring countdown (250 ms redraw from endsAt, recompute on visibilitychange), status text, cue, pause/resume, Kész for reps, prev/next, transition card, "Edzés befejezése". Starts from overview "Indítás" (unlocks audio, wake lock). Saves snapshot on every transition; Today shows "Folytatás" when a snapshot exists. Finish → `/finish/:id`.
   - Validator: start a session, verify countdown, pause/resume, Kész advances, reload mid-session resumes in place.
   - Commit: `feat(player): build workout player screen`

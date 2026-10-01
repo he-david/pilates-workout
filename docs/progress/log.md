@@ -109,3 +109,11 @@ Format:
 ## 2026-10-01 · T16 · Wake lock and sound · done
 - `platform/wakeLock.ts` createWakeLock() {acquire, release, status: native|fallback|none}, idempotent, re-acquire on visible; `useWakeLock(active)` hook. `platform/sound.ts` unlockAudio() (call from Indítás tap), beep('tick'|'go'), chime() — synthesised oscillator tones. `platform/visibility.ts` onVisible/onHidden/isVisible.
 - Fallback video uses 2×2 canvas.captureStream() (no ffmpeg → no mp4 asset). TODO: verify on iPhone (M3 manual check); if screen still sleeps without native wake lock, add tiny looping mp4 to public/.
+
+## 2026-10-01 · T17 · Player screen · done
+- `screens/PlayerScreen` + `player/{usePlayer,PlayerHeader,PlayerBody,PlayerControls,stepDose}`; reducer gained `finish` action + `finishSummary()`. 250 ms clock in screen layer, tick on visible; snapshot saved on every real state change and on hidden, cleared on finish.
+- Audio unlock on Player's first play tap (keeps platform/ inside Player; costs one extra tap after overview "Indítás"). Beeps 3-2-1 once per phase/index/second; chime at step end.
+- Today: snapshot for hero session → "Folytatás" main button, "Edzés megnyitása" small link.
+- Finish: navigate replace to /finish/:id with router state `FinishSummary {sessionId, startedAt, finishedAt, durationSec, completed, usedEasier}`. T19 must handle missing state (reload on /finish) → e.g. redirect to Today.
+- Validator fix round 1: restored paused transition showed "Kész" (bug) → hidden; finish link colour #3F5675; finish link shown in idle (no confirm, goes to Today). Re-check pass.
+- Follow-up: no "use easier" button in player UI (reducer supports it; design has none) → consider in T25.

@@ -17,7 +17,7 @@ describe('App routes', () => {
     ['/log', 'Napló'],
     ['/session/w03-b', 'Core & gerinc'],
     ['/exercise/roll-up?session=w03-b', 'Felgördülés'],
-    ['/player/s1', 'Lejátszó s1'],
+    ['/player/nope', 'Nem található az edzés'],
     ['/finish/s1', 'Kész s1'],
   ])('renders %s', (path, title) => {
     renderAt(path)

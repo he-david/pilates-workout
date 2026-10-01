@@ -55,6 +55,7 @@ export type PlayerAction =
   | { type: 'prev'; now: number }
   | { type: 'tick'; now: number }
   | { type: 'useEasier'; now: number }
+  | { type: 'finish'; now: number }
   | { type: 'restore'; snapshot: PlayerSnapshot; now: number }
 
 const BLOCKS: readonly BlockKey[] = ['warmup', 'main', 'cooldown']
@@ -249,6 +250,10 @@ export function playerReducer(state: PlayerState, action: PlayerAction): PlayerS
       )
       return advanceFrom(marked, last.id, now)
     }
+    case 'finish': {
+      if (state.phase === 'idle' || state.phase === 'finished') return state
+      return finish(unpause(state, now), now)
+    }
     case 'restore':
       return restore(state, action.snapshot, now)
   }
@@ -395,4 +400,27 @@ export function elapsedMs(state: PlayerState, now: number): number {
   if (state.startedAt === null) return 0
   const end = state.finishedAt ?? state.pausedAt ?? now
   return Math.max(0, end - state.startedAt - state.pausedTotal)
+}
+
+/** What the finish screen needs to save the log. */
+export type FinishSummary = {
+  sessionId: string
+  /** ms timestamps */
+  startedAt: number
+  finishedAt: number
+  durationSec: number
+  completed: string[]
+  usedEasier: string[]
+}
+
+export function finishSummary(state: PlayerState, now: number): FinishSummary {
+  const finishedAt = state.finishedAt ?? now
+  return {
+    sessionId: state.sessionId,
+    startedAt: state.startedAt ?? finishedAt,
+    finishedAt,
+    durationSec: Math.round(elapsedMs(state, now) / 1000),
+    completed: completedExerciseIds(state),
+    usedEasier: [...state.usedEasier],
+  }
 }
