@@ -45,3 +45,7 @@ Format:
 - `docs/deploy.md`: Cloudflare Pages, iPhone install, M1 checklist.
 - Validator pass on preview: manifest/icons 200, SW activated, offline reload of /program and /log renders with font, console clean, favicon 404 gone.
 - Follow-up: update banner only testable by deploying two builds (check on device).
+
+## 2026-10-01 · T06 · Types and formatting helpers · done
+- `domain/types.ts` per plan data model. Prescription `{session, easierPreselected[], harderSwapped[], notes[]}` and PlayerSnapshot `{sessionId, index, endsAt?, pausedRemaining?}` not specified in plan → designed here; revise in T14/T24 if needed.
+- `domain/format.ts`: doseLabel ("8 ismétlés", "3 × 35 mp", "45 mp", perSide → "6 ismétlés oldalanként" — wording chosen, not in design), minutesLabel/minutesShort, durationLabel ("51:20" / "6 ó 52 p"), Hungarian day/month names, dateHeader ("Csütörtök, október 1."). Day/month take getDay()/getMonth() indexes.

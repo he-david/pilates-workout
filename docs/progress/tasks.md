@@ -44,7 +44,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
 
 ## M2 · Content and browsing screens
 
-- [ ] **T06** · domain · Types and formatting helpers
+- [x] **T06** · domain · Types and formatting helpers
   - `src/domain/types.ts`: Exercise, Dose, SessionItem, ProgramSession, SessionLog, Settings, PlayerSnapshot, Prescription (per plan). `src/domain/format.ts`: dose label ("8 ismétlés", "45 mp", "2 × 30 mp", "oldalanként"), minutes ("50 perc", "8'"), duration ("51:20", "6 ó 52 p"), Hungarian day/month names. Tests.
   - Commit: `feat(domain): add core types and hungarian format helpers`
 
