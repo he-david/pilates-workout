@@ -76,7 +76,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Per `03-session-overview.dc.html`: back header, title block, stats (minutes, exercises, difficulty, equipment), 8'/34'/8' block bar, warm-up / main / cool-down lists (number, Hungarian + English name, dose, "Új" badge), "Előnézet" and "Indítás" buttons. Tap exercise → `/exercise/:id?session=…`.
   - Commit: `feat(overview): build session overview screen`
 
-- [ ] **T13** · ui · Exercise detail screen · UI
+- [x] **T13** · ui · Exercise detail screen · UI
   - Per `04-exercise-detail.dc.html`: media placeholder, badges, position "Gyakorlat n / 14", names + dose, focus/tempo/equipment facts, numbered steps, "Figyelj rá" mistakes, easier/harder cards, "Te legutóbb" (from logs, hidden when none).
   - Done when: all 36 sessions and their exercises browsable; validator spot-checks weeks 1, 6, 12.
   - Commit: `feat(exercise): build exercise detail screen`

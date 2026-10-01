@@ -1,3 +1,4 @@
+import { sessionItems } from '../domain/todaySummary'
 import type { ProgramSession, SessionLog } from '../domain/types'
 
 /**
@@ -25,7 +26,7 @@ export function seedLogs(
         startedAt: new Date(d.getTime() - 50 * 60000).toISOString(),
         finishedAt: finished,
         durationSec: 3000,
-        completed: [],
+        completed: sessionItems(session).map((item) => item.exerciseId),
         usedEasier: [],
         rating: 4,
         areas: [],

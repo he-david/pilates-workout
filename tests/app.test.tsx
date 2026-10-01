@@ -16,7 +16,7 @@ describe('App routes', () => {
     ['/program', '12 hetes program'],
     ['/log', 'Napló'],
     ['/session/w03-b', 'Core & gerinc'],
-    ['/exercise/e1?session=s1', 'Gyakorlat e1'],
+    ['/exercise/roll-up?session=w03-b', 'Felgördülés'],
     ['/player/s1', 'Lejátszó s1'],
     ['/finish/s1', 'Kész s1'],
   ])('renders %s', (path, title) => {

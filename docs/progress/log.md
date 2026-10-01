@@ -86,3 +86,10 @@ Format:
 - Dose display: new `doseShort` ("8 ism.", "8 / oldal", "5 / irány", "100 számolás", "3 × 35 mp", "8 perc"); optional `Exercise.repUnit` (count/direction) set on hundred, ball-hundred, single-leg-circles, band-leg-circles. Whole minutes render "N perc".
 - "Előnézet" → first exercise detail; all rows link to `/exercise/:id?session=`; sticky bottom bar with safe-area; not-found state.
 - Validator pass. Minor follow-up: "+1 ism." growth badges on 9 rows of w03-b (design shows only "Új" + "+5 mp") — screen busier than design; reconsider (e.g. show only time growth / first growth) with T25 "Módosítva" badges.
+
+## 2026-10-01 · T13 · Exercise detail screen · done
+- `screens/ExerciseScreen` + `exercise/{MediaPlaceholder,Steps}`; pure `domain/exerciseDetail.ts` (parseStep bolds Belégzés/Kilégzés prefixes, buildExerciseContext: position n/total, dose, "kb. N perc" only for rep doses, badge, prev/next; lastTimeText).
+- With `?session`: badge, position, dose, Előző/Következő + "Vissza az edzéshez" (additions). Without: generic view. Not-found state.
+- "Te legutóbb": SessionLog has no per-exercise dose → uses prescribed dose of latest completed session containing the exercise; hidden when none. Dev seed now fills `completed`.
+- Not built (no behaviour defined yet): design's "Csere másikra", "Könnyítést kérek" buttons; fake media pills omitted. Revisit in T25 (easier variant).
+- Validator: spot-check walked all exercises of w01-a, w06-b, w12-c — no errors. Fix round 1: Roll Up mistake em dash (content now matches design), duplicate "kb." on time doses, link tap height. Re-check pass.

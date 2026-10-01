@@ -38,7 +38,7 @@ export const matExercises: Exercise[] = [
     ],
     mistakes: [
       'Ne lendületből, ne a vállakkal húzd fel magad.',
-      'A lábak maradjanak a matracon, ha felemelkednek, használd a könnyítést.',
+      'A lábak maradjanak a matracon — ha felemelkednek, használd a könnyítést.',
       'A nyak laza, a vállak távol a fülektől.',
     ],
     easier: 'Hajlított térd, gumiszalag a talp körül, a kéz segít.',
