@@ -28,7 +28,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Done when: 7 PNGs exist and look like the design.
   - Commit: `docs(design): add reference screenshots of the 7 screens`
 
-- [ ] **T04** · ui · App shell, routes and UI primitives · UI
+- [x] **T04** · ui · App shell, routes and UI primitives · UI
   - Routes: `/` Today, `/program`, `/session/:id`, `/exercise/:id` (with `?session=` context), `/player/:id`, `/finish/:id`, `/log`. Placeholder screens with titles.
   - `src/ui/`: `BottomNav` (Ma / Program / Napló, icons + active state exactly as design), `Card`, `Button` (primary/secondary/ghost), `Chip`, `Icon` (inline SVG set used by the design), `Ring` (progress ring). Safe-area padding, `viewport-fit=cover` meta.
   - Done when: gates pass; validator: bottom nav matches design, navigation works, no console errors.

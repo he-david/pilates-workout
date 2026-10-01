@@ -32,3 +32,9 @@ Format:
 ## 2026-10-01 · T03 · Reference screenshots · done
 - 7 boards captured to `docs/design/screens/0N-*.png` (390 CSS px, 2x). 03/04 re-captured via 600×1700 viewport + element screenshot after first attempt cropped.
 - Minor: Today/Program boards cut bottom nav at board edge (design board height). Use 07-log.png for full nav reference (Ma / Program / Napló).
+
+## 2026-10-01 · T04 · App shell, routes and UI primitives · done
+- Routes per plan; `TabLayout` layout route shows BottomNav only on `/`, `/program`, `/log` (designs show no nav on session/exercise/player/finish).
+- `src/ui/`: Icon (16 inline SVGs from designs), BottomNav, Card, Button/ButtonLink (primary = accent bg, 54px, r16), Chip, Ring. Placeholder screens with titles.
+- Validator pass: nav computed styles match 07-log design, active state follows route, no horizontal scroll.
+- Validator minor / follow-up: `/favicon.ico` 404 in console → fixed by T05 icons.
