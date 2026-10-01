@@ -1,5 +1,6 @@
 import { program, WEEKS } from '../content/program'
 import { useLogs, useSettings, useToday } from '../data'
+import { saveSettings } from '../data/settings'
 import { useSnapshot } from '../data/player'
 import { dayNameLong, dateHeader } from '../domain/format'
 import { currentStreak, programProgress, weekView } from '../domain/schedule'
@@ -16,6 +17,8 @@ export function TodayScreen() {
   const settings = useSettings(today)
   const logs = useLogs(today)
   const snapshot = useSnapshot()
+
+  if (!logs) return null
 
   const progress = programProgress(program, logs)
   const week = weekView(settings, logs, today)
@@ -56,7 +59,12 @@ export function TodayScreen() {
       )}
       <WeekStrip week={week} nextLabel={nextLabel} />
       <PhaseCard progress={progress} fractions={weekFractions(program, logs, WEEKS)} />
-      <ReminderCard trainingDays={settings.trainingDays} time={settings.reminderTime ?? '18:30'} />
+      <ReminderCard
+        trainingDays={settings.trainingDays}
+        time={settings.reminderTime ?? '18:30'}
+        on={settings.reminderEnabled ?? true}
+        onToggle={(on) => void saveSettings({ ...settings, reminderEnabled: on })}
+      />
     </main>
   )
 }

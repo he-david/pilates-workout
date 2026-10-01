@@ -64,6 +64,7 @@ export function ExerciseScreen() {
   const logs = useLogs(today)
   const exercise = getExercise(id)
   if (!exercise) return <NotFound />
+  if (!logs) return null
 
   const sessionId = params.get('session') ?? ''
   const session = getSession(sessionId)

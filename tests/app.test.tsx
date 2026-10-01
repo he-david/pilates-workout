@@ -19,9 +19,9 @@ describe('App routes', () => {
     ['/exercise/roll-up?session=w03-b', 'Felgördülés'],
     ['/player/nope', 'Nem található az edzés'],
     ['/finish/s1', 'Kész s1'],
-  ])('renders %s', (path, title) => {
+  ])('renders %s', async (path, title) => {
     renderAt(path)
-    expect(screen.getByRole('heading', { level: 1, name: title })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: title })).toBeInTheDocument()
   })
 
   it('shows bottom nav on tabs only', () => {

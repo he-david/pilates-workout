@@ -9,6 +9,7 @@ export function ProgramScreen() {
   const today = useToday()
   const settings = useSettings(today)
   const logs = useLogs(today)
+  if (!logs) return null
   const progress = programProgress(program, logs)
   const rows = buildWeekRows(program, logs)
   const days = weekdayLetters(settings.trainingDays)

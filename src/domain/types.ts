@@ -67,6 +67,8 @@ export type Settings = {
   startDate: string
   trainingDays: number[]
   reminderTime?: string
+  /** Reminder toggle; absent means on. */
+  reminderEnabled?: boolean
 }
 
 /** Output of prescribe(): the session as it should be performed next. */

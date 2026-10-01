@@ -4,18 +4,22 @@ import { program } from '../content/program'
 import type { SessionLog } from '../domain/types'
 import { DEFAULT_TRAINING_DAYS } from './defaultSettings'
 import { seedLogs } from './devSeed'
-
-const NONE: SessionLog[] = []
+import { useStoredLogs } from './logs'
 
 /**
- * Finished sessions. Stub until the Dexie store lands (M4): always empty in production.
- * In dev builds only, `?devDone=7` fakes 7 finished sessions to preview mid-program states.
+ * Finished sessions, live from the device. `undefined` while loading (screens render nothing
+ * until then, so no empty-state flash). In dev builds only, `?devDone=7` replaces them with
+ * 7 fake finished sessions to preview mid-program states.
  */
-export function useLogs(today: Date): SessionLog[] {
+export function useLogs(today: Date): SessionLog[] | undefined {
   const { search } = useLocation()
-  return useMemo(() => {
-    if (!import.meta.env.DEV) return NONE
+  const stored = useStoredLogs()
+  const seeded = useMemo(() => {
+    if (!import.meta.env.DEV) return undefined
     const n = Number(new URLSearchParams(search).get('devDone'))
-    return Number.isInteger(n) && n > 0 ? seedLogs(program, n, DEFAULT_TRAINING_DAYS, today) : NONE
+    return Number.isInteger(n) && n > 0
+      ? seedLogs(program, n, DEFAULT_TRAINING_DAYS, today)
+      : undefined
   }, [search, today])
+  return seeded ?? stored
 }

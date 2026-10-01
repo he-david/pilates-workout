@@ -1,20 +1,22 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { vi } from 'vitest'
 import { ProgramScreen } from '../src/screens/ProgramScreen'
 
-function renderProgram(path = '/program') {
-  render(
+async function renderProgram(path = '/program') {
+  const result = render(
     <MemoryRouter initialEntries={[path]}>
       <ProgramScreen />
     </MemoryRouter>,
   )
+  await waitFor(() => expect(result.container).not.toBeEmptyDOMElement())
+  return result
 }
 
 describe('ProgramScreen', () => {
-  it('strikes through done sessions only', () => {
-    renderProgram('/program?devDone=7')
+  it('strikes through done sessions only', async () => {
+    await renderProgram('/program?devDone=7')
     const done = screen.getByText('A · Légzés & középtest', { selector: 'span.line-through' })
     expect(done).toBeInTheDocument()
     expect(
@@ -28,8 +30,8 @@ describe('ProgramScreen', () => {
   })
   afterEach(() => vi.useRealTimers())
 
-  it('shows progress, 3 phases and locked highlights', () => {
-    renderProgram()
+  it('shows progress, 3 phases and locked highlights', async () => {
+    await renderProgram()
     expect(screen.getByText('0 / 36')).toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)).toEqual([
       'Alapozás',
@@ -42,8 +44,8 @@ describe('ProgramScreen', () => {
     expect(within(hl[0] as HTMLElement).getAllByRole('listitem')).toHaveLength(4)
   })
 
-  it('expands the current week by default and links sessions', () => {
-    renderProgram()
+  it('expands the current week by default and links sessions', async () => {
+    await renderProgram()
     expect(screen.getByRole('button', { name: /1\. hét · e hét/ })).toHaveAttribute(
       'aria-expanded',
       'true',
@@ -59,7 +61,7 @@ describe('ProgramScreen', () => {
   })
 
   it('toggles a week', async () => {
-    renderProgram()
+    await renderProgram()
     const btn = screen.getByRole('button', { name: /2\. hét/ })
     await userEvent.click(btn)
     expect(btn).toHaveAttribute('aria-expanded', 'true')

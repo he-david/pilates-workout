@@ -117,3 +117,8 @@ Format:
 - Finish: navigate replace to /finish/:id with router state `FinishSummary {sessionId, startedAt, finishedAt, durationSec, completed, usedEasier}`. T19 must handle missing state (reload on /finish) → e.g. redirect to Today.
 - Validator fix round 1: restored paused transition showed "Kész" (bug) → hidden; finish link colour #3F5675; finish link shown in idle (no confirm, goes to Today). Re-check pass.
 - Follow-up: no "use easier" button in player UI (reducer supports it; design has none) → consider in T25.
+
+## 2026-10-01 · T18 · Session logs · done
+- `data/logs.ts`: saveLog (validates; strips id; no de-dup by sessionId), listLogs, live hooks. `useLogs()` now `SessionLog[] | undefined` (undefined = loading → screens render null, no empty flash); dev `?devDone=N` replaces stored logs with seeded ones.
+- `useSettings` live from Dexie with defaults fallback; `initSettings(new Date())` on app start persists start date on first run. `Settings.reminderEnabled?` (absent = on); Today reminder toggle persisted.
+- Follow-ups: T19 decide re-doing a session → second log (completion-based schedule unaffected); T21 e2e should confirm reminder toggle persists across reload.

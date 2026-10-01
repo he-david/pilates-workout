@@ -102,7 +102,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
 
 ## M4 · Finish and logging
 
-- [ ] **T18** · data · Session logs
+- [x] **T18** · data · Session logs
   - `src/data/logs.ts`: `saveLog`, `useLogs` (useLiveQuery), `useSettings`; replace the empty-logs stub from T10. Tests with fake-indexeddb.
   - Commit: `feat(data): add session log storage and live hooks`
 
