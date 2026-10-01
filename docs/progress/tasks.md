@@ -129,7 +129,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
 
 ## M6 · Adaptive progression and polish
 
-- [ ] **T24** · domain · Progression engine
+- [x] **T24** · domain · Progression engine
   - `src/domain/progression.ts`: `prescribe(session, history): Prescription` per rule table (1 bump, 2×"Könnyű" in a week pull forward, 3 none, 4 offer easier on new items, 5 hold + holds −20%). Pure, table tests row by row.
   - Commit: `feat(domain): add adaptive progression engine`
 

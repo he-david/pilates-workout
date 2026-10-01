@@ -149,3 +149,9 @@ Format:
 - Scope addition (T22 follow-up): Finish screen on assessment sessions shows "Felmérő eredmények" with "Plank tartás (mp)" → bestHoldSec['forearm-plank'] and "Tiszta Roll Up ismétlés" → bestReps['roll-up'] (16px, numeric, parsed in domain; invalid/blank dropped silently).
 - Dev seed: ratings cycle 3,2,3,2,…; weeks 4/8 seed assessment values (records visible at `/log?devDone=26`).
 - Validator fix round 1: calendar window, duplicate empty message, "0:00" total → "0 p". Re-check pass.
+
+## 2026-10-01 · T24 · Progression engine · done
+- `domain/progression.ts`: `prescribe(session, history, previous?)` (previous = same slot last week, for the hold rule); Prescription `{session, rule, modified, easierPreselected, harderSwapped, notes}`; returns same session object when unchanged. Rule source = latest log by finishedAt.
+- Followed plan table (overrides orchestrator notes): 1 bump +1 rep/+5 s main items (generic ceilings 30 reps/180 s; counted items like Hundred skipped); 2 = latest rating 2 and ≥2 rating-2 logs same program week → harder variant of first 2 non-new main exercises; 4 → easier preselected on new main items; 5 → previous same-slot doses if lower, holds −20% (5 s steps, 15 s floor).
+- Added (plan silent): assessment sessions never modified; no history → no change.
+- T25: apply only to nextSession; pass previousSameSlot; Exercise harder/easier are text only → map harderSwapped/easierPreselected to variant text.

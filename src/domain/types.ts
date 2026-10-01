@@ -73,9 +73,15 @@ export type Settings = {
   reminderEnabled?: boolean
 }
 
+export type ProgressionRule = 'none' | 'bump' | 'pullForward' | 'offerEasier' | 'hold'
+
 /** Output of prescribe(): the session as it should be performed next. */
 export type Prescription = {
+  /** the session with adjusted doses; identical to the input when nothing changed */
   session: ProgramSession
+  rule: ProgressionRule
+  /** exerciseIds whose dose differs from the authored session ("Módosítva") */
+  modified: string[]
   /** exerciseIds whose easier variant is pre-selected */
   easierPreselected: string[]
   /** exerciseIds swapped to the harder variant */
