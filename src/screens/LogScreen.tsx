@@ -2,6 +2,7 @@ import { program } from '../content/program'
 import { useLogs, useSettings, useToday } from '../data'
 import { weekdayLetters } from '../domain/programView'
 import { calendarCells, calendarWindow, computeStats, rangeTitle } from '../domain/stats'
+import { BackupCard } from './log/BackupCard'
 import { CalendarCard } from './log/CalendarCard'
 import { RatingChart } from './log/RatingChart'
 import { RecordsCard } from './log/RecordsCard'
@@ -27,6 +28,7 @@ export function LogScreen() {
       />
       <RatingChart weeks={stats.weeks} trend={stats.trend} />
       <RecordsCard records={stats.records} />
+      <BackupCard lastBackupAt={settings.lastBackupAt} logCount={logs.length} now={today} />
     </main>
   )
 }

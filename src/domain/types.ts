@@ -71,6 +71,8 @@ export type Settings = {
   reminderTime?: string
   /** Reminder toggle; absent means on. */
   reminderEnabled?: boolean
+  /** ISO time of the last successful backup export. */
+  lastBackupAt?: string
 }
 
 export type ProgressionRule = 'none' | 'bump' | 'pullForward' | 'offerEasier' | 'hold'

@@ -163,3 +163,11 @@ Format:
 - Dev: `?devDone=N&devRating=1..5` (sessionStorage per tab; `?devDone=0` clears).
 - Validator pass: rating 5 → w01-b plank 3×25 → 3×20 mp with badge + note, player 20 mp; rating 4 → Könnyítés on new items, usedEasier logged; rating 1 → bump; non-next sessions unchanged. pullForward covered by component test only.
 - Edge: snapshot restore after session logged elsewhere would rebuild authored steps (practically unreachable).
+
+## 2026-10-01 · T26 · Backup export / import · done
+- `domain/backup.ts` (format `{app:'tonus', version:1, exportedAt, settings, logs}`, parseBackup with Hungarian errors, needsBackupNudge, shared logProblem also used by saveLog); `data/backup.ts` exportBackup/importBackup; `platform/share.ts` (Web Share with File, download fallback, AbortError → cancelled). `Settings.lastBackupAt` (non-indexed).
+- Boundary: Log screen → data/backup → platform/share (data→platform dependency, screens never import platform).
+- Import REPLACES logs + settings in one transaction, clears snapshot. Nudge when ≥1 log and no backup / >30 days.
+- `screens/log/BackupCard` designed from existing tokens (design 07 has none).
+- Validator pass: real round-trip (ő/ű intact), confirm/cancel, invalid file rejected with data untouched. Web Share path not exercised in desktop (verify on iPhone: M6 manual check).
+- Minors/follow-ups: invalid file shows confirm before validation error (validate first would be nicer); Log chart with exactly 1 log shows bar + "Néhány edzés után…" placeholder together.

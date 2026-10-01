@@ -1,17 +1,11 @@
 import { useLiveQuery } from 'dexie-react-hooks'
+import { logProblem } from '../domain/backup'
 import type { SessionLog } from '../domain/types'
 import { db } from './db'
 
 function validate(log: SessionLog): void {
-  const dates = [log.startedAt, log.finishedAt]
-  if (!log.sessionId) throw new Error('saveLog: sessionId is required')
-  if (dates.some((d) => Number.isNaN(Date.parse(d)))) throw new Error('saveLog: invalid date')
-  if (!Number.isFinite(log.durationSec) || log.durationSec < 0) {
-    throw new Error('saveLog: invalid durationSec')
-  }
-  if (!Number.isInteger(log.rating) || log.rating < 1 || log.rating > 5) {
-    throw new Error('saveLog: rating must be 1-5')
-  }
+  const problem = logProblem(log)
+  if (problem) throw new Error(`saveLog: ${problem}`)
 }
 
 /** Stores a finished session; returns its new id. Throws on a malformed log. */

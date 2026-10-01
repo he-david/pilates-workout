@@ -138,7 +138,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Validator: rate a session 5 → next session's holds visibly shorter with badge.
   - Commit: `feat(overview): apply adaptive prescription with modified badge`
 
-- [ ] **T26** · data · Backup export / import · UI
+- [x] **T26** · data · Backup export / import · UI
   - `src/data/backup.ts` (serialise logs + settings with version, validate + import), `src/platform/share.ts` (Web Share with File, download fallback). Log screen: "Mentés exportálása", "Visszaállítás", last backup date, nudge after 30 days. Tests for round-trip and validation.
   - Commit: `feat(data): add json backup export and import`
 

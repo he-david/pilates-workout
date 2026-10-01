@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { vi } from 'vitest'
 import { db } from '../src/data/db'
@@ -77,5 +77,68 @@ describe('LogScreen', () => {
     expect(within(row).getByText('könnyítve')).toBeInTheDocument()
     expect(screen.getByText('25 mp')).toBeInTheDocument()
     expect(screen.getByText('40 mp')).toBeInTheDocument()
+  })
+})
+
+describe('LogScreen backup', () => {
+  beforeEach(async () => {
+    await db.logs.clear()
+    await db.settings.clear()
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date(2026, 9, 1, 12))
+  })
+  afterEach(() => vi.useRealTimers())
+
+  it('shows buttons, no nudge without logs, nudge with an old/no backup', async () => {
+    await renderLog()
+    expect(screen.getByRole('button', { name: 'Mentés exportálása' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Visszaállítás' })).toBeInTheDocument()
+    expect(screen.getByText(/Még nem mentettél/)).toBeInTheDocument()
+    expect(screen.queryByText('Ideje menteni az edzésnaplódat.')).not.toBeInTheDocument()
+    await saveLog(mkLog('w01-a', 24, 3))
+    await screen.findByText('Ideje menteni az edzésnaplódat.')
+  })
+
+  it('shows the last backup date and no nudge when recent', async () => {
+    await db.settings.put({
+      id: 'me',
+      startDate: '2026-09-21',
+      trainingDays: [1, 4, 6],
+      lastBackupAt: new Date(2026, 8, 20, 12).toISOString(),
+    })
+    await saveLog(mkLog('w01-a', 24, 3))
+    await renderLog()
+    await screen.findByText('Utolsó mentés: 2026. 09. 20.')
+    expect(screen.queryByText('Ideje menteni az edzésnaplódat.')).not.toBeInTheDocument()
+  })
+
+  it('confirms before restoring, then replaces the data', async () => {
+    await saveLog(mkLog('w01-a', 24, 3))
+    await renderLog()
+    const backup = {
+      app: 'tonus',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      settings: { id: 'me', startDate: '2026-09-21', trainingDays: [1, 4, 6] },
+      logs: [mkLog('w01-b', 25, 4), mkLog('w01-c', 26, 5)],
+    }
+    const file = new File([JSON.stringify(backup)], 'b.json', { type: 'application/json' })
+    const input = screen.getByTestId('backup-file')
+    Object.defineProperty(file, 'text', { value: () => Promise.resolve(JSON.stringify(backup)) })
+    fireEvent.change(input, { target: { files: [file] } })
+    await screen.findByText(/felülírja a jelenlegi naplót/)
+    expect(await db.logs.count()).toBe(1)
+    fireEvent.click(screen.getByRole('button', { name: 'Felülírás' }))
+    await screen.findByText('Visszaállítva: 2 edzés.')
+    expect((await db.logs.toArray()).map((l) => l.sessionId)).toEqual(['w01-b', 'w01-c'])
+  })
+
+  it('shows a Hungarian error for an invalid file', async () => {
+    await renderLog()
+    const file = new File(['x'], 'b.json')
+    Object.defineProperty(file, 'text', { value: () => Promise.resolve('{"app":"x"}') })
+    fireEvent.change(screen.getByTestId('backup-file'), { target: { files: [file] } })
+    fireEvent.click(await screen.findByRole('button', { name: 'Felülírás' }))
+    await screen.findByText('Ez nem Tónus mentés.')
   })
 })
