@@ -73,3 +73,10 @@ Format:
 - `data/` stubs: useLogs → [] (dev-only `?devDone=N` seeds fake logs, stripped from prod build), useSettings → `defaultSettings(today)` (Mon/Thu/Sat, 18:30), useToday reads clock. T15/T18 replace stubs; reminder toggle is local state only → wire to settings in T18.
 - h1 varies by day status; three phrasings invented ("Mára megvagy, szép munka", "Ma pihenőnap van", "Végigcsináltad a programot").
 - Validator pass. Minors left: what's-new is 3 lines vs design 2; meta row single line because w03-b equipment is "Matrac" only (design shows "Matrac + kis labda" — phase 1 is mat-only by T08 content; reconcile during content review).
+
+## 2026-10-01 · T11 · Program screen · done
+- `screens/ProgramScreen` + `screens/program/{ProgressCard,PhaseSection,WeekRow,SessionRow}`; pure `domain/programView.ts` (buildWeekRows, phaseState, weekdayLetters) with tests. Current week expanded by default; week rows toggle (aria-expanded, local state).
+- Done phases show weeks with "Kész"; locked phases show description + highlight chips from library. Assessment weeks dashed + expandable. "→ ma" only when today is an open training day, else "→ következő".
+- Validator fail round 1 (major): done sessions lacked line-through (`no-underline` on same Link overrode it) → moved to inner span. Re-check pass.
+- Intentional: session rows 44px (design 32px) for tap targets.
+- Note: theme `text-base` = 14px (not Tailwind default 16px) — keep in mind for inputs (≥16px rule).

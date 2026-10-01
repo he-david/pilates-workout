@@ -13,7 +13,7 @@ function renderAt(path: string) {
 describe('App routes', () => {
   it.each([
     ['/', /^Ma/],
-    ['/program', 'Program'],
+    ['/program', '12 hetes program'],
     ['/log', 'Napló'],
     ['/session/s1', 'Edzés s1'],
     ['/exercise/e1?session=s1', 'Gyakorlat e1'],
