@@ -177,3 +177,18 @@ Format:
 - Validator pass: download fallback, ics content verified (`.validation/T27/reminder.ics`).
 - Follow-ups: COUNT=36 regardless of sessions already done (could use remaining count); first occurrence = today even if 18:30 already passed. Import into iPhone Calendar is part of M6 manual check.
 - Orchestrator gate fix: `tests/exerciseScreen.test.tsx` "renders every exercise of every session" timeout 5 s → 20 s (was flaky under parallel load).
+
+## 2026-10-01 · T28 · Final UI audit · done
+- Validator pass, no majors: all 7 screens match design apart from accepted deviations; console clean (dev + preview); no horizontal scroll; inputs 16px; offline on preview renders all routes with font; fresh-DB smoke flow on preview OK. No code changes.
+- Minor follow-ups (not fixed):
+  - Player segment bar per block ("1 / 4") vs design whole-session 14 segments ("Fő rész 6/14").
+  - Exercise "Figyelj rá" list lacks "•" bullets.
+  - Today reminder toggle 52×32 (design size; under 44px tap height).
+  - Log chart week-label positions differ cosmetically.
+  - Dev seed has no assessment logs at devDone=8 (records only at ≥26).
+
+## 2026-10-01 · Session handoff · paused by user after T28
+- Next: T29 (README and handover). Then final report.
+- OPEN user decisions: (1) timed hold skipped via "Következő" doesn't count as completed — give credit after partial time? (2) session ended immediately with 0 exercises still counts as done and advances program. (3) HUMAN REVIEW deferred by user: exercises (T07) + program (T08), incl. w03-b equipment "Matrac" vs design "Matrac + kis labda".
+- iPhone manual checks M1–M6 pending (see tasks.md), incl. wake-lock fallback (T16) and Web Share/.ics import (T26/T27).
+- Servers stopped. Restart: `npm run dev -- --port 5173 --strictPort`.

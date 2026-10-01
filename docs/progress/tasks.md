@@ -146,7 +146,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/platform/calendar.ts`: build weekly RRULE .ics from settings (Mon/Thu/Sat 18:30, Europe/Budapest); pure builder tested. Reminder card on Today offers it via share/download.
   - Commit: `feat(platform): add ics calendar reminder`
 
-- [ ] **T28** · validate · Final UI audit · UI
+- [x] **T28** · validate · Final UI audit · UI
   - ui-validator on all 7 screens vs reference screenshots + console + mobile basics + offline (preview build, SW). Implementer fixes majors (`fix(ui): …` commit).
 
 - [ ] **T29** · docs · README and handover
