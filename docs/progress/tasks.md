@@ -60,7 +60,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Notes: flag "HUMAN REVIEW: program" in log.md.
   - Commit: `feat(content): add 12-week program with guardrail tests`
 
-- [ ] **T09** · domain · Schedule
+- [x] **T09** · domain · Schedule
   - `src/domain/schedule.ts`: `nextSession(program, logs)` (first without a log), `sessionStatus`, `weekView(settings, logs, today)` (Mon–Sun, done/today/planned), `programProgress` (n / 36, %, current week/phase), `currentStreak`. Time passed in. Exhaustive tests.
   - Commit: `feat(domain): add completion-based schedule`
 

@@ -63,3 +63,7 @@ Format:
 - Added optional `Exercise.tempo` (roll-up "3 le · 3 fel", hundred "5 be · 5 ki").
 - Follow-ups for UI (T10/T12): hundred stored `{reps:100}` but design shows "100 számolás"; cooldown `{time:480}` design shows "8 perc" → handle in domain format, not ad hoc. "+5 mp" badge / "Új a héten" must be derived from week-over-week dose diff. Phase 2 design chips "Teaser előkészítő", "Nyitott lábú billenés" not in library → highlights use side-plank, swimming, saw, ball-bridge.
 - HUMAN REVIEW: program — deferred by user, will review later.
+
+## 2026-10-01 · T09 · Schedule · done
+- `domain/schedule.ts`: nextSession, sessionStatus (done/next/upcoming), weekView (days with done/today/planned/missed/rest, doneCount over training days), programProgress, currentStreak. Program passed in; logs matched by local calendar day of finishedAt (DST-tested).
+- Streak rule (plan silent, chosen): consecutive planned training days back from today each with ≥1 log; rest days never break; today pending doesn't break; extra sessions on rest days neither add nor break. Review: training on Tue instead of Mon breaks streak — revisit if too strict in real use.
