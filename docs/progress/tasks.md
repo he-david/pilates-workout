@@ -54,7 +54,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Notes: flag "HUMAN REVIEW: exercises" in log.md.
   - Commit: `feat(content): add exercise library`
 
-- [ ] **T08** · content · 36-session program + guardrail tests
+- [x] **T08** · content · 36-session program + guardrail tests
   - `src/content/program.ts`: 12 weeks × A/B/C, phases 1–3 (titles/descriptions per design 02), assessment weeks 4/8/12, built-in progression (+1–2 reps or +5 s weekly, phase 2 props and longer holds, phase 3 advanced + shorter rests). Week 3 B = "Core & gerinc" with 14 exercises like design 01/03.
   - Guardrail tests (`tests/content/`): every exerciseId exists; exactly 36 sessions, 3 per week, slots A/B/C; every session est. total 48–52 min with warm-up 7–9 / main 32–36 / cool-down 7–9 min; assessment flags on weeks 4/8/12.
   - Notes: flag "HUMAN REVIEW: program" in log.md.

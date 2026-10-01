@@ -56,3 +56,10 @@ Format:
 - Roll Up steps: the design's bold "Belégzés:/Kilégzés:" prefixes are plain text in the step strings. Tempo ("3 le · 3 fel") is not in the Exercise type; T08/T10 must supply it or derive it.
 - HUMAN REVIEW: exercises. Instructor should check safety wording, esp. Átfordulás (Rollover, neck), Teaser, Fekvőtámasz, Hattyú, Fali guggolás labdával, nyújtások, and Hungarian names/wording generally.
 - Review deferred by user ("I'll review it later"); not blocking. Also proofread chosen names: Csavaró hasprés (Criss-Cross), Fejemelés (Chest Lift), Átfordulás (Rollover), Fűrész, Lábemelés plankban, Egylábas egyensúly.
+
+## 2026-10-01 · T08 · 36-session program + guardrail tests · done
+- `src/content/program.ts` (+ `program/{build,slots,phases}.ts`): ids `w03-b`; slot titles A "Légzés & középtest", B "Core & gerinc", C "Láb, far & egyensúly". Every session 8/34/8 min exactly (estSeconds weighted shares). Week 3 B reproduces design 03. 48 guardrail tests.
+- Progression: +1 rep / +5 s weekly, capped; assessment weeks 4/8/12 repeat previous dose (`isAssessment` on all 3); props from week 5; teaser/push-up/corkscrew/rollover/leg-pull-front phase 3 only, starting 3–4 reps. `isNew` = first appearance.
+- Added optional `Exercise.tempo` (roll-up "3 le · 3 fel", hundred "5 be · 5 ki").
+- Follow-ups for UI (T10/T12): hundred stored `{reps:100}` but design shows "100 számolás"; cooldown `{time:480}` design shows "8 perc" → handle in domain format, not ad hoc. "+5 mp" badge / "Új a héten" must be derived from week-over-week dose diff. Phase 2 design chips "Teaser előkészítő", "Nyitott lábú billenés" not in library → highlights use side-plank, swimming, saw, ball-bridge.
+- HUMAN REVIEW: program — deferred by user, will review later.

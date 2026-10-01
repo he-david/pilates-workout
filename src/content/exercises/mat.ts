@@ -21,6 +21,7 @@ export const matExercises: Exercise[] = [
     easier: 'A talpak maradnak a földön, vagy a fej marad a matracon.',
     harder: 'Nyújtott lábak 45 fokban, amíg a derék a matracon marad.',
     cue: 'Kilégzés 5 pumpálásra, belégzés 5-re. A lapockák maradjanak fent, a nyak laza.',
+    tempo: '5 be · 5 ki',
   },
   {
     id: 'roll-up',
@@ -42,6 +43,7 @@ export const matExercises: Exercise[] = [
     easier: 'Hajlított térd, gumiszalag a talp körül, a kéz segít.',
     harder: 'Kis labda a kezek között, 5–5 mp-es tempó.',
     cue: 'Csigolyánként gördülj, lendület nélkül. Kilégzésre húzd a köldököt a gerinc felé.',
+    tempo: '3 le · 3 fel',
   },
   {
     id: 'single-leg-circles',

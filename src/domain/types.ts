@@ -11,6 +11,8 @@ export type Exercise = {
   easier: string
   harder: string
   cue: string
+  /** e.g. "3 le · 3 fel" */
+  tempo?: string
   media?: string
 }
 
