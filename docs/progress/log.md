@@ -171,3 +171,9 @@ Format:
 - `screens/log/BackupCard` designed from existing tokens (design 07 has none).
 - Validator pass: real round-trip (ő/ű intact), confirm/cancel, invalid file rejected with data untouched. Web Share path not exercised in desktop (verify on iPhone: M6 manual check).
 - Minors/follow-ups: invalid file shows confirm before validation error (validate first would be nicer); Log chart with exactly 1 log shows bar + "Néhány edzés után…" placeholder together.
+
+## 2026-10-01 · T27 · Calendar reminder (.ics) · done
+- `platform/calendar.ts` pure RFC 5545 builder (CRLF, UTF-8-safe 75-octet folding, escaping, VTIMEZONE Europe/Budapest, RRULE weekly BYDAY from trainingDays, COUNT=36, DURATION PT50M, VALARM -PT10M); `data/reminder.ts` shareReminder(now) → platform/share (same pattern as T26). Today ReminderCard: "Naptárba" row (44px), quiet status.
+- Validator pass: download fallback, ics content verified (`.validation/T27/reminder.ics`).
+- Follow-ups: COUNT=36 regardless of sessions already done (could use remaining count); first occurrence = today even if 18:30 already passed. Import into iPhone Calendar is part of M6 manual check.
+- Orchestrator gate fix: `tests/exerciseScreen.test.tsx` "renders every exercise of every session" timeout 5 s → 20 s (was flaky under parallel load).

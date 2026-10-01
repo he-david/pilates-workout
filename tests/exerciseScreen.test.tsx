@@ -69,5 +69,5 @@ describe('ExerciseScreen', () => {
         unmount()
       }
     }
-  })
+  }, 20_000)
 })

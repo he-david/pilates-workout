@@ -142,7 +142,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/data/backup.ts` (serialise logs + settings with version, validate + import), `src/platform/share.ts` (Web Share with File, download fallback). Log screen: "Mentés exportálása", "Visszaállítás", last backup date, nudge after 30 days. Tests for round-trip and validation.
   - Commit: `feat(data): add json backup export and import`
 
-- [ ] **T27** · platform · Calendar reminder (.ics) · UI
+- [x] **T27** · platform · Calendar reminder (.ics) · UI
   - `src/platform/calendar.ts`: build weekly RRULE .ics from settings (Mon/Thu/Sat 18:30, Europe/Budapest); pure builder tested. Reminder card on Today offers it via share/download.
   - Commit: `feat(platform): add ics calendar reminder`
 
