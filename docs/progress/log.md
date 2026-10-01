@@ -49,3 +49,10 @@ Format:
 ## 2026-10-01 · T06 · Types and formatting helpers · done
 - `domain/types.ts` per plan data model. Prescription `{session, easierPreselected[], harderSwapped[], notes[]}` and PlayerSnapshot `{sessionId, index, endsAt?, pausedRemaining?}` not specified in plan → designed here; revise in T14/T24 if needed.
 - `domain/format.ts`: doseLabel ("8 ismétlés", "3 × 35 mp", "45 mp", perSide → "6 ismétlés oldalanként" — wording chosen, not in design), minutesLabel/minutesShort, durationLabel ("51:20" / "6 ó 52 p"), Hungarian day/month names, dateHeader ("Csütörtök, október 1."). Day/month take getDay()/getMonth() indexes.
+
+## 2026-10-01 · T07 · Exercise library · done
+- 42 exercises in `src/content/exercises/{warmup,mat,props,advanced,cooldown}.ts`, aggregated in `src/content/exercises.ts` (`exercises`, `getExercise(id)`). Kebab-case ids. Tests in `tests/content/exercises.test.ts` (unique ids/names, fields filled, breathing mention, all design names present with matching hu/en, Roll Up equals design 04).
+- Design names kept verbatim, incl. "Sellő nyújtás + gyermekpóz" as ONE exercise (id `mermaid-childs-pose`, nameEn "Mermaid · Child's Pose") and "Macska–tehén" with en dash.
+- Roll Up steps: the design's bold "Belégzés:/Kilégzés:" prefixes are plain text in the step strings. Tempo ("3 le · 3 fel") is not in the Exercise type; T08/T10 must supply it or derive it.
+- HUMAN REVIEW: exercises. Instructor should check safety wording, esp. Átfordulás (Rollover, neck), Teaser, Fekvőtámasz, Hattyú, Fali guggolás labdával, nyújtások, and Hungarian names/wording generally.
+- Review deferred by user ("I'll review it later"); not blocking. Also proofread chosen names: Csavaró hasprés (Criss-Cross), Fejemelés (Chest Lift), Átfordulás (Rollover), Fűrész, Lábemelés plankban, Egylábas egyensúly.

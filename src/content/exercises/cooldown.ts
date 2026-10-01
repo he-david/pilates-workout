@@ -1,0 +1,88 @@
+import type { Exercise } from '../../domain/types'
+
+export const cooldownExercises: Exercise[] = [
+  {
+    id: 'mermaid-childs-pose',
+    nameHu: 'Sellő nyújtás + gyermekpóz',
+    nameEn: "Mermaid · Child's Pose",
+    focus: ['Oldalsó törzs', 'hát', 'váll'],
+    equipment: ['mat'],
+    steps: [
+      'Ülj keresztbe tett lábbal vagy oldalra hajlított lábbal, mindkét ülőcsont a matracon.',
+      'Belégzés: nyújtsd az egyik kezet a fej fölé. Kilégzés: hajolj oldalra, a másik kéz a matracon.',
+      'Lélegezz 3–4 mély lélegzetet, a bordákba küldve a levegőt, majd váltsd az oldalt.',
+      'Gyermekpóz: térdelj, ülj a sarkadra, és nyújtsd előre a karokat a matracon, pihentesd a homlokod. Tarts 5–8 lélegzetet.',
+    ],
+    mistakes: [
+      'A csípő felemelkedik az ülésről.',
+      'A törzs előre vagy hátra fordul oldalhajlításkor.',
+      'A gyermekpóznál térdfájdalom: ilyenkor tegyél párnát a térd mögé.',
+    ],
+    easier: 'Gyermekpózban tegyél párnát a térd mögé vagy a mellkas alá.',
+    harder: 'Tartsd hosszabban, a légzéssel mélyítsd a nyújtást.',
+    cue: 'Minden kilégzésnél engedj egy kicsit tovább. Ne húzd, hagyd, hogy a nyújtás magától jöjjön.',
+  },
+  {
+    id: 'supine-hamstring-stretch',
+    nameHu: 'Combhajlító nyújtás',
+    nameEn: 'Supine Hamstring Stretch',
+    focus: ['Combhajlító', 'alsó hát'],
+    equipment: ['mat', 'band'],
+    steps: [
+      'Hanyatt fekve, az egyik talp körül gumiszalag vagy törölköző, a láb a mennyezet felé nyújtva.',
+      'A másik láb hajlítva vagy nyújtva a matracon, a medence semleges.',
+      'Kilégzés: finoman húzd a lábat közelebb, amíg a comb hátulján enyhe nyújtást érzel.',
+      'Tartsd 5–8 lélegzetig, majd váltsd a lábat.',
+    ],
+    mistakes: [
+      'A derék leválik a matracról, a medence billen.',
+      'Rángatod a lábat, vagy fájdalomig húzod.',
+      'A váll és a nyak megfeszül.',
+    ],
+    easier: 'Hajlítsd a térdet kissé, vagy használj hosszabb törölközőt.',
+    harder: 'Nyújtott másik láb, a szalagot húzd kicsit közelebb.',
+    cue: 'Csak enyhe nyújtás érzése legyen, soha ne fájdalom.',
+  },
+  {
+    id: 'kneeling-hip-flexor-stretch',
+    nameHu: 'Csípőhajlító nyújtás',
+    nameEn: 'Kneeling Hip Flexor Stretch',
+    focus: ['Csípőhajlító', 'comb eleje'],
+    equipment: ['mat'],
+    steps: [
+      'Térdelj fél térden egy párnára, a másik láb előre, a térd a boka fölött.',
+      'Kezek a combon, a medence enyhén alátolva, a törzs magas.',
+      'Kilégzés: told a csípőt finoman előre, amíg az hátsó láb csípőjének elején nyújtást érzel.',
+      'Tartsd 5–8 lélegzetig, majd váltsd az oldalt.',
+    ],
+    mistakes: [
+      'A derék homorít, a bordák kinyílnak.',
+      'Az elülső térd a lábujjak elé csúszik.',
+      'A térd a kemény földön van, nincs alátámasztva.',
+    ],
+    easier: 'Kisebb lépéshossz, tegyél párnát a térd alá.',
+    harder: 'Emeld a hátsó oldali kart a fej fölé, és dőlj enyhén oldalra.',
+    cue: 'Told a csípőt előre, a törzs magas marad. Ne homorítsd a derekad.',
+  },
+  {
+    id: 'figure-four-stretch',
+    nameHu: 'Négyes nyújtás',
+    nameEn: 'Figure Four Stretch',
+    focus: ['Far', 'csípő'],
+    equipment: ['mat'],
+    steps: [
+      'Hanyatt fekve, térd hajlítva, talpak a földön. Tedd az egyik boka a másik térd fölé.',
+      'Fogd meg a támasztó láb combját, és húzd finoman a mellkas felé.',
+      'Kilégzés: enyhe nyújtás a far és a csípő külső részén. A fej és a váll a matracon marad.',
+      'Tartsd 5–8 lélegzetig, majd váltsd az oldalt.',
+    ],
+    mistakes: [
+      'Fájdalomig húzod, a térd csavarodik.',
+      'A fej és a nyak megfeszül.',
+      'A medence elfordul a matractól.',
+    ],
+    easier: 'Hagyd a talpat a matracon, csak tedd át a bokát a térdre.',
+    harder: 'Húzd közelebb a combot, a mellkas felé, lassan.',
+    cue: 'A nyújtás a farban legyen, a térdben ne érezz semmit. Ha fáj, engedd el.',
+  },
+]

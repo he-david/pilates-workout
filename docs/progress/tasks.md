@@ -48,7 +48,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/domain/types.ts`: Exercise, Dose, SessionItem, ProgramSession, SessionLog, Settings, PlayerSnapshot, Prescription (per plan). `src/domain/format.ts`: dose label ("8 ismétlés", "45 mp", "2 × 30 mp", "oldalanként"), minutes ("50 perc", "8'"), duration ("51:20", "6 ó 52 p"), Hungarian day/month names. Tests.
   - Commit: `feat(domain): add core types and hungarian format helpers`
 
-- [ ] **T07** · content · Exercise library
+- [x] **T07** · content · Exercise library
   - `src/content/exercises.ts`: ~40 Hungarian exercises (nameHu, nameEn, focus, equipment, steps with breathing cues, mistakes, easier, harder, cue). Classic mat repertoire for phase 1, ball/ring/band variants for phase 2, Teaser, Rollover, Corkscrew (Dugóhúzó), Push-up etc. for phase 3, plus warm-up and cool-down items (e.g. Sellő nyújtás + gyermekpóz). Roll Up text must match design 04.
   - Tests: unique ids, all fields non-empty, Hungarian names present.
   - Notes: flag "HUMAN REVIEW: exercises" in log.md.
