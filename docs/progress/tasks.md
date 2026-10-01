@@ -11,7 +11,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
 
 ## M1 · Skeleton on the phone
 
-- [ ] **T01** · infra · Scaffold project
+- [x] **T01** · infra · Scaffold project
   - Vite + React 19 + TS strict, Tailwind v4 (`@tailwindcss/vite`), React Router 7, ESLint (flat config, typescript-eslint, react-hooks) + Prettier, Vitest + Testing Library + jsdom. Scripts: `dev`, `test` (vitest run), `test:watch`, `typecheck`, `lint`, `format`, `build`, `preview`.
   - Folder skeleton from `implementation-plan.md` (`src/{content,domain,data,platform,ui,screens}`, `tests/`). `.gitignore` (node_modules, dist, dev-dist, .validation, .vscode). One trivial passing test.
   - Done when: all four gates pass; `npm run dev` serves a page.
