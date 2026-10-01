@@ -122,3 +122,9 @@ Format:
 - `data/logs.ts`: saveLog (validates; strips id; no de-dup by sessionId), listLogs, live hooks. `useLogs()` now `SessionLog[] | undefined` (undefined = loading → screens render null, no empty flash); dev `?devDone=N` replaces stored logs with seeded ones.
 - `useSettings` live from Dexie with defaults fallback; `initSettings(new Date())` on app start persists start date on first run. `Settings.reminderEnabled?` (absent = on); Today reminder toggle persisted.
 - Follow-ups: T19 decide re-doing a session → second log (completion-based schedule unaffected); T21 e2e should confirm reminder toggle persists across reload.
+
+## 2026-10-01 · T19 · Finish screen · done
+- `screens/FinishScreen` + `finish/{StatTile,RatingPicker,AreaChips}`; pure `domain/finish.ts` (RATING_OPTIONS, AREA_OPTIONS Has/Hát/Far/Comb/Váll/Nyak, DEFAULT_RATING 3, buildLog, streakWithPending, exerciseCount).
+- Missing/mismatched router state → redirect to `/`. "Pont jó" preselected per design; areas start EMPTY (design sample shows "Has" selected — not copied, would bias logs). Textarea 16px. Save: saveLog → clearSnapshot → navigate('/', replace), double-tap guarded. Re-doing a session adds another log.
+- Validator pass: log saved with ő/ű intact, snapshot cleared, Today advances to w01-b, 1/36, streak 1.
+- Minor: save button not pinned to bottom (page scrolls, 998px). Follow-up question for user: a session ended immediately via "Edzés befejezése" (0 exercises) still counts as done and advances the program — consider requiring ≥1 completed step or a warning.

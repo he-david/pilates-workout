@@ -106,7 +106,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/data/logs.ts`: `saveLog`, `useLogs` (useLiveQuery), `useSettings`; replace the empty-logs stub from T10. Tests with fake-indexeddb.
   - Commit: `feat(data): add session log storage and live hooks`
 
-- [ ] **T19** · ui · Finish screen · UI
+- [x] **T19** · ui · Finish screen · UI
   - Per `06-finish.dc.html`: "Szép munka!", duration / exercises / streak stats, difficulty rating 1–5 (Nagyon könnyű · Könnyű · Pont jó · Nehéz · Túl nehéz with hints), areas chips (Has, Hát, …), note textarea (≥16px), "Mentés a naplóba" → saveLog, clear player snapshot, go to Today.
   - Commit: `feat(finish): build finish screen and save session log`
 

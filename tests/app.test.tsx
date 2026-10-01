@@ -18,7 +18,6 @@ describe('App routes', () => {
     ['/session/w03-b', 'Core & gerinc'],
     ['/exercise/roll-up?session=w03-b', 'Felgördülés'],
     ['/player/nope', 'Nem található az edzés'],
-    ['/finish/s1', 'Kész s1'],
   ])('renders %s', async (path, title) => {
     renderAt(path)
     expect(await screen.findByRole('heading', { level: 1, name: title })).toBeInTheDocument()
