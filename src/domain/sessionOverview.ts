@@ -1,6 +1,6 @@
 import { doseShort, minutesLabel, minutesShort } from './format'
 import { sessionEquipment, equipmentLabel, sessionItems, sessionSeconds } from './todaySummary'
-import type { Exercise, ProgramSession, SessionItem } from './types'
+import type { Exercise, Prescription, ProgramSession, SessionItem } from './types'
 
 /** Pure view model for the session overview screen. */
 
@@ -15,6 +15,8 @@ export type OverviewRow = {
   dose: string
   /** "Új" or a growth versus last week such as "+5 mp" */
   badge?: string
+  /** prescription variant line: the harder or easier text for this row */
+  variant?: { label: string; text: string }
 }
 
 export type OverviewBlock = {
@@ -33,6 +35,8 @@ export type SessionOverview = {
   exerciseCount: number
   difficulty: number
   equipment: string
+  /** why the session was adjusted (Hungarian), empty when it was not */
+  notes: string[]
   blocks: OverviewBlock[]
 }
 
@@ -63,11 +67,20 @@ export function doseGrowth(now: SessionItem, before: SessionItem): string | unde
   return undefined
 }
 
-/** Pumping counts (the Hundred) never get a growth badge: the design shows none. */
+export type PrescriptionFlags = Pick<
+  Prescription,
+  'modified' | 'easierPreselected' | 'harderSwapped' | 'notes'
+>
+
+/**
+ * `session` is the effective (already adjusted) session. Growth badges only show time-dose
+ * growth like the design ("+5 mp"); items changed by the prescription show "Módosítva" instead.
+ */
 export function buildOverview(
   session: ProgramSession,
   previous: ProgramSession | undefined,
   exercises: readonly Exercise[],
+  flags?: PrescriptionFlags,
 ): SessionOverview {
   const byId = new Map(exercises.map((e) => [e.id, e]))
   const before = new Map((previous ? sessionItems(previous) : []).map((i) => [i.exerciseId, i]))
@@ -78,17 +91,29 @@ export function buildOverview(
       const ex = byId.get(item.exerciseId)
       const prev = before.get(item.exerciseId)
       n += 1
+      const changed =
+        flags !== undefined &&
+        (flags.modified.includes(item.exerciseId) || flags.harderSwapped.includes(item.exerciseId))
+      const variant =
+        ex && flags?.harderSwapped.includes(item.exerciseId)
+          ? { label: 'Nehezítés', text: ex.harder }
+          : ex && flags?.easierPreselected.includes(item.exerciseId)
+            ? { label: 'Könnyítés', text: ex.easier }
+            : undefined
       return {
         n,
         exerciseId: item.exerciseId,
         nameHu: ex?.nameHu ?? item.exerciseId,
         nameEn: ex?.nameEn ?? '',
         dose: doseShort(item.dose, ex?.repUnit),
-        badge: item.isNew
-          ? 'Új'
-          : prev && ex?.repUnit !== 'count'
-            ? doseGrowth(item, prev)
-            : undefined,
+        badge: changed
+          ? 'Módosítva'
+          : item.isNew
+            ? 'Új'
+            : prev && item.dose.kind === 'time'
+              ? doseGrowth(item, prev)
+              : undefined,
+        ...(variant ? { variant } : {}),
       }
     })
     const seconds = items.reduce((sum, i) => sum + i.estSeconds, 0)
@@ -101,6 +126,7 @@ export function buildOverview(
     exerciseCount: n,
     difficulty: difficulty(session.week),
     equipment: equipmentLabel(sessionEquipment(session, exercises)),
+    notes: flags?.notes ?? [],
     blocks,
   }
 }

@@ -432,3 +432,21 @@ describe('manual finish', () => {
     })
   })
 })
+
+describe('pre-selected easier variants', () => {
+  it('are logged as used only once the exercise is completed', () => {
+    const idle = createPlayer(session, ['a', 'c'])
+    let s = run(idle, { type: 'start', now: T0 }, { type: 'done', now: T0 + 1 })
+    expect(finishSummary(s, T0 + 2).usedEasier).toEqual(['a'])
+    s = run(s, { type: 'finish', now: T0 + 3 })
+    expect(finishSummary(s, T0 + 4).usedEasier).toEqual(['a'])
+  })
+  it('merge with easier variants tapped in the player without duplicates', () => {
+    const s = run(
+      createPlayer(session, ['a']),
+      { type: 'start', now: T0 },
+      { type: 'useEasier', now: T0 + 1 },
+    )
+    expect(finishSummary(s, T0 + 2).usedEasier).toEqual(['a'])
+  })
+})

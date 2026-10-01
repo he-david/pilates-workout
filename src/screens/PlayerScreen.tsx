@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useParams } from 'react-router'
 import { getExercise } from '../content/exercises'
-import { getSession } from '../content/program'
+import { getSession, program } from '../content/program'
+import { useLogs, useToday } from '../data'
+import { effectiveSession } from '../domain/effectiveSession'
 import { blockProgress, currentStep, upNext } from '../domain/player'
 import type { ProgramSession } from '../domain/types'
 import { Button, ButtonLink } from '../ui'
@@ -21,8 +23,16 @@ function NotFound() {
   )
 }
 
-function Player({ session }: { session: ProgramSession }) {
-  const { state, now, ready, secondsLeft, send, play, close } = usePlayer(session)
+function Player({
+  session,
+  easier,
+  harder,
+}: {
+  session: ProgramSession
+  easier: readonly string[]
+  harder: readonly string[]
+}) {
+  const { state, now, ready, secondsLeft, send, play, close } = usePlayer(session, easier, harder)
   const [confirming, setConfirming] = useState(false)
   const step = currentStep(state)
   const next = upNext(state)
@@ -97,6 +107,19 @@ function Player({ session }: { session: ProgramSession }) {
 
 export function PlayerScreen() {
   const { id = '' } = useParams()
-  const session = getSession(id)
-  return session ? <Player key={session.id} session={session} /> : <NotFound />
+  const authored = getSession(id)
+  const today = useToday()
+  const logs = useLogs(today)
+  if (!authored) return <NotFound />
+  // Wait for the logs: the steps are built once, from the prescription for the next session.
+  if (!logs) return null
+  const rx = effectiveSession(program, authored.id, logs)
+  return (
+    <Player
+      key={authored.id}
+      session={rx?.session ?? authored}
+      easier={rx?.easierPreselected ?? []}
+      harder={rx?.harderSwapped ?? []}
+    />
+  )
 }

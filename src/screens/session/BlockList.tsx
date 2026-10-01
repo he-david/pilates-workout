@@ -22,6 +22,11 @@ export function BlockList({ block, sessionId }: Props) {
                   {row.badge && <Chip tone="pink">{row.badge}</Chip>}
                 </span>
                 <span className="text-xs text-ink-muted">{row.nameEn}</span>
+                {row.variant && (
+                  <span className="text-xs leading-snug text-warn-ink">
+                    <span className="font-extrabold">{row.variant.label}:</span> {row.variant.text}
+                  </span>
+                )}
               </span>
               <span className="text-right text-sm font-bold text-ink-soft">{row.dose}</span>
             </Link>

@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'reac
 import { getExercise, exercises } from '../content/exercises'
 import { getSession, program } from '../content/program'
 import { useLogs, useToday } from '../data'
+import { effectiveSession } from '../domain/effectiveSession'
 import { buildExerciseContext, lastTimeText } from '../domain/exerciseDetail'
 import { equipmentLabel } from '../domain/todaySummary'
 import { ButtonLink, Icon } from '../ui'
@@ -68,7 +69,10 @@ export function ExerciseScreen() {
 
   const sessionId = params.get('session') ?? ''
   const session = getSession(sessionId)
-  const ctx = session ? buildExerciseContext(exercise, session, program, exercises) : undefined
+  const rx = session ? effectiveSession(program, session.id, logs) : undefined
+  const ctx = session
+    ? buildExerciseContext(exercise, rx?.session ?? session, program, exercises, rx)
+    : undefined
   const last = lastTimeText(exercise, logs, program)
   const href = (to: string) => `/exercise/${to}?session=${sessionId}`
 

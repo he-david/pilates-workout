@@ -1,5 +1,5 @@
 import { doseLabel } from './format'
-import { buildOverview } from './sessionOverview'
+import { buildOverview, type PrescriptionFlags } from './sessionOverview'
 import { previousSameSlot, sessionItems } from './todaySummary'
 import type { Exercise, ProgramSession, SessionLog } from './types'
 
@@ -37,14 +37,18 @@ export function buildExerciseContext(
   session: ProgramSession,
   program: readonly ProgramSession[],
   exercises: readonly Exercise[],
+  flags?: PrescriptionFlags,
 ): ExerciseContext | undefined {
   const items = sessionItems(session)
   const index = items.findIndex((i) => i.exerciseId === exercise.id)
   const item = items[index]
   if (!item) return undefined
-  const rows = buildOverview(session, previousSameSlot(program, session), exercises).blocks.flatMap(
-    (b) => b.rows,
-  )
+  const rows = buildOverview(
+    session,
+    previousSameSlot(program, session),
+    exercises,
+    flags,
+  ).blocks.flatMap((b) => b.rows)
   const badge = rows[index]?.badge
   return {
     n: index + 1,

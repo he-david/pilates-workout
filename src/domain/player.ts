@@ -40,6 +40,10 @@ export type PlayerState = {
   pausedIn: 'step' | 'transition' | null
   doneSteps: readonly number[]
   usedEasier: readonly string[]
+  /** exerciseIds whose easier variant the prescription pre-selected (logged once completed) */
+  easierPreselected: readonly string[]
+  /** exerciseIds swapped to the harder variant by the prescription (display only) */
+  harderSwapped: readonly string[]
   startedAt: number | null
   pausedAt: number | null
   pausedTotal: number
@@ -91,7 +95,11 @@ export function buildSteps(session: ProgramSession): Step[] {
   return steps
 }
 
-export function createPlayer(session: ProgramSession): PlayerState {
+export function createPlayer(
+  session: ProgramSession,
+  easierPreselected: readonly string[] = [],
+  harderSwapped: readonly string[] = [],
+): PlayerState {
   return {
     sessionId: session.id,
     steps: buildSteps(session),
@@ -102,6 +110,8 @@ export function createPlayer(session: ProgramSession): PlayerState {
     pausedIn: null,
     doneSteps: [],
     usedEasier: [],
+    easierPreselected,
+    harderSwapped,
     startedAt: null,
     pausedAt: null,
     pausedTotal: 0,
@@ -402,6 +412,13 @@ export function elapsedMs(state: PlayerState, now: number): number {
   return Math.max(0, end - state.startedAt - state.pausedTotal)
 }
 
+/** Easier variants actually used: tapped in the player, or pre-selected and then completed. */
+export function usedEasierIds(state: PlayerState): string[] {
+  const done = completedExerciseIds(state)
+  const pre = state.easierPreselected.filter((id) => done.includes(id))
+  return [...new Set([...state.usedEasier, ...pre])]
+}
+
 /** What the finish screen needs to save the log. */
 export type FinishSummary = {
   sessionId: string
@@ -421,6 +438,6 @@ export function finishSummary(state: PlayerState, now: number): FinishSummary {
     finishedAt,
     durationSec: Math.round(elapsedMs(state, now) / 1000),
     completed: completedExerciseIds(state),
-    usedEasier: [...state.usedEasier],
+    usedEasier: usedEasierIds(state),
   }
 }

@@ -66,3 +66,28 @@ describe('buildOverview w03-b', () => {
     expect(rows.find((r) => r.nameHu === 'Százas')?.badge).toBeUndefined()
   })
 })
+
+describe('buildOverview with a prescription', () => {
+  const session = getSession('w03-b')!
+  const flags = {
+    modified: [session.main[0]!.exerciseId],
+    harderSwapped: [session.main[1]!.exerciseId],
+    easierPreselected: [session.main[2]!.exerciseId],
+    notes: ['info'],
+  }
+  const o = buildOverview(session, getSession('w02-b'), exercises, flags)
+  const main = o.blocks[1]!.rows
+
+  it('marks modified and harder items with Módosítva and shows variants', () => {
+    expect(main[0]!.badge).toBe('Módosítva')
+    expect(main[1]!.badge).toBe('Módosítva')
+    expect(main[1]!.variant?.label).toBe('Nehezítés')
+    expect(main[2]!.variant?.label).toBe('Könnyítés')
+    expect(o.notes).toEqual(['info'])
+  })
+
+  it('shows growth badges only for time doses', () => {
+    const plain = buildOverview(session, getSession('w02-b'), exercises)
+    expect(plain.blocks.flatMap((b) => b.rows).every((r) => !r.badge?.includes('ism.'))).toBe(true)
+  })
+})

@@ -52,6 +52,18 @@ export function PlayerBody({ state, step, now, secondsLeft }: Props) {
           </div>
         </Ring>
       </div>
+      {ex && state.easierPreselected.includes(step.exerciseId) && (
+        <div className="flex flex-col gap-1 rounded-2xl bg-pink-soft px-4 py-3.5 text-warn-ink">
+          <div className="text-xs font-extrabold tracking-label uppercase">Könnyítés</div>
+          <div className="text-md leading-normal">{ex.easier}</div>
+        </div>
+      )}
+      {ex && state.harderSwapped.includes(step.exerciseId) && (
+        <div className="flex flex-col gap-1 rounded-2xl bg-pink-soft px-4 py-3.5 text-warn-ink">
+          <div className="text-xs font-extrabold tracking-label uppercase">Nehezítés</div>
+          <div className="text-md leading-normal">{ex.harder}</div>
+        </div>
+      )}
       {ex && (
         <div className="flex items-start gap-3 rounded-2xl bg-surface px-4 py-3.5">
           <Icon name="breath" size={20} className="mt-0.5 shrink-0 text-streak" />

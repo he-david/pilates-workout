@@ -14,13 +14,15 @@ function assessmentFixture(week: number): Partial<SessionLog> {
 
 /**
  * Dev-only fixture: `n` finished sessions on the latest training days before `today`
- * (oldest session first). Used by `?devDone=n` to view a mid-program state.
+ * (oldest session first). Used by `?devDone=n` to view a mid-program state;
+ * `lastRating` (`?devRating=1..5`) sets the rating of the newest log to preview a progression rule.
  */
 export function seedLogs(
   program: readonly ProgramSession[],
   n: number,
   trainingDays: readonly number[],
   today: Date,
+  lastRating?: Rating,
 ): SessionLog[] {
   const days: Date[] = []
   for (let back = 1; days.length < n && back < 400; back++) {
@@ -40,7 +42,8 @@ export function seedLogs(
         durationSec: 3000,
         completed: sessionItems(session).map((item) => item.exerciseId),
         usedEasier: [],
-        rating: RATINGS[i % RATINGS.length] ?? 3,
+        rating:
+          i === days.length - 1 && lastRating ? lastRating : (RATINGS[i % RATINGS.length] ?? 3),
         areas: [],
         ...assessment,
       } satisfies SessionLog,

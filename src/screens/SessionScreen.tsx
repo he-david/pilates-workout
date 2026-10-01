@@ -3,6 +3,7 @@ import { exercises } from '../content/exercises'
 import { getSession, program } from '../content/program'
 import { useLogs, useToday } from '../data'
 import { shortDate } from '../domain/format'
+import { effectiveSession } from '../domain/effectiveSession'
 import { lastLogOf } from '../domain/schedule'
 import { buildOverview } from '../domain/sessionOverview'
 import { previousSameSlot } from '../domain/todaySummary'
@@ -51,7 +52,8 @@ export function SessionScreen() {
   if (!logs) return null
   const doneLog = lastLogOf(session.id, logs)
 
-  const o = buildOverview(session, previousSameSlot(program, session), exercises)
+  const rx = effectiveSession(program, session.id, logs)
+  const o = buildOverview(rx?.session ?? session, previousSameSlot(program, session), exercises, rx)
   const firstId = o.blocks[0]?.rows[0]?.exerciseId
 
   return (
@@ -76,6 +78,13 @@ export function SessionScreen() {
             <Chip>{o.equipment}</Chip>
           </div>
         </header>
+        {o.notes.length > 0 && (
+          <div className="flex flex-col gap-1 rounded-2xl bg-pink-soft px-3.5 py-3 text-base leading-snug text-warn-ink">
+            {o.notes.map((note) => (
+              <p key={note}>{note}</p>
+            ))}
+          </div>
+        )}
         <BlockBar blocks={o.blocks} />
         {o.blocks.map((b) => (
           <BlockList key={b.key} block={b} sessionId={session.id} />

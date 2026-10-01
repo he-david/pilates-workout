@@ -4,10 +4,11 @@ import { vi } from 'vitest'
 import { getExercise } from '../src/content/exercises'
 import { getSession } from '../src/content/program'
 import { buildSteps } from '../src/domain/player'
-import type { PlayerSnapshot } from '../src/domain/types'
+import type { PlayerSnapshot, SessionLog } from '../src/domain/types'
 import { PlayerScreen } from '../src/screens/PlayerScreen'
 
 const mocks = vi.hoisted(() => ({
+  logs: [] as SessionLog[],
   snapshot: null as PlayerSnapshot | null | undefined,
   save: vi.fn(),
   clear: vi.fn(),
@@ -24,6 +25,7 @@ vi.mock('../src/data/player', () => ({
     return Promise.resolve()
   },
 }))
+vi.mock('../src/data/useLogs', () => ({ useLogs: () => mocks.logs }))
 vi.mock('../src/platform/sound', () => ({
   unlockAudio: vi.fn(() => Promise.resolve(true)),
   beep: vi.fn(),
@@ -60,6 +62,7 @@ describe('PlayerScreen', () => {
     vi.useFakeTimers()
     vi.setSystemTime(new Date(2026, 9, 1, 12))
     mocks.snapshot = null
+    mocks.logs = []
     mocks.save.mockClear()
     mocks.clear.mockClear()
   })
@@ -189,5 +192,81 @@ describe('PlayerScreen', () => {
       </MemoryRouter>,
     )
     expect(screen.getByText('Nem található az edzés')).toBeInTheDocument()
+  })
+
+  it('shows the easier variant when the prescription pre-selected it', () => {
+    // w01-a rated 4 (hard): the new exercises of w01-b get the easier variant
+    mocks.logs = [
+      {
+        sessionId: 'w01-a',
+        startedAt: '2026-09-30T10:00:00.000Z',
+        finishedAt: '2026-09-30T10:50:00.000Z',
+        durationSec: 3000,
+        completed: [],
+        usedEasier: [],
+        rating: 4,
+        areas: [],
+      },
+    ]
+    const b = getSession('w01-b')
+    const firstNew = b?.main.find((i) => i.isNew)
+    if (!b || !firstNew) throw new Error('fixture')
+    const bSteps = buildSteps(b)
+    render(
+      <MemoryRouter initialEntries={['/player/w01-b']}>
+        <Routes>
+          <Route path="/player/:id" element={<PlayerScreen />} />
+        </Routes>
+      </MemoryRouter>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Indítás' }))
+    const k = bSteps.findIndex((s) => s.exerciseId === firstNew.exerciseId)
+    expect(screen.queryByText('Könnyítés')).toBeNull()
+    for (let i = 0; i < k; i++) {
+      fireEvent.click(screen.getByRole('button', { name: 'Következő gyakorlat' }))
+      fireEvent.click(screen.getByRole('button', { name: 'Következő gyakorlat' }))
+    }
+    expect(screen.getByText('Könnyítés')).toBeInTheDocument()
+    expect(screen.getByText(getExercise(firstNew.exerciseId)?.easier ?? '')).toBeInTheDocument()
+  })
+
+  it('shows the harder variant on pulled-forward items', () => {
+    const mkLog = (sessionId: string, rating: 2 | 3, day: number): SessionLog => ({
+      sessionId,
+      startedAt: `2026-09-${day}T10:00:00.000Z`,
+      finishedAt: `2026-09-${day}T10:50:00.000Z`,
+      durationSec: 3000,
+      completed: [],
+      usedEasier: [],
+      rating,
+      areas: [],
+    })
+    mocks.logs = [
+      mkLog('w01-a', 3, 10),
+      mkLog('w01-b', 3, 11),
+      mkLog('w01-c', 3, 12),
+      mkLog('w02-a', 2, 13),
+      mkLog('w02-b', 2, 14),
+    ]
+    const c = getSession('w02-c')
+    const target = c?.main.find((i) => !i.isNew)
+    if (!c || !target) throw new Error('fixture')
+    const cSteps = buildSteps(c)
+    render(
+      <MemoryRouter initialEntries={['/player/w02-c']}>
+        <Routes>
+          <Route path="/player/:id" element={<PlayerScreen />} />
+        </Routes>
+      </MemoryRouter>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Indítás' }))
+    const k = cSteps.findIndex((s) => s.exerciseId === target.exerciseId)
+    expect(screen.queryByText('Nehezítés')).toBeNull()
+    for (let i = 0; i < k; i++) {
+      fireEvent.click(screen.getByRole('button', { name: 'Következő gyakorlat' }))
+      fireEvent.click(screen.getByRole('button', { name: 'Következő gyakorlat' }))
+    }
+    expect(screen.getByText('Nehezítés')).toBeInTheDocument()
+    expect(screen.getByText(getExercise(target.exerciseId)?.harder ?? '')).toBeInTheDocument()
   })
 })

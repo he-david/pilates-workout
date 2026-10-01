@@ -133,7 +133,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/domain/progression.ts`: `prescribe(session, history): Prescription` per rule table (1 bump, 2×"Könnyű" in a week pull forward, 3 none, 4 offer easier on new items, 5 hold + holds −20%). Pure, table tests row by row.
   - Commit: `feat(domain): add adaptive progression engine`
 
-- [ ] **T25** · ui · Apply prescription in overview and player · UI
+- [x] **T25** · ui · Apply prescription in overview and player · UI
   - Overview and player use `prescribe()` output; "Módosítva" badge on changed items; easier variant pre-selected when offered; player logs usedEasier.
   - Validator: rate a session 5 → next session's holds visibly shorter with badge.
   - Commit: `feat(overview): apply adaptive prescription with modified badge`

@@ -2,6 +2,7 @@ import { program, WEEKS } from '../content/program'
 import { useLogs, useSettings, useToday } from '../data'
 import { saveSettings } from '../data/settings'
 import { useSnapshot } from '../data/player'
+import { effectiveSession } from '../domain/effectiveSession'
 import { dayNameLong, dateHeader } from '../domain/format'
 import { currentStreak, programProgress, weekView } from '../domain/schedule'
 import { weekFractions } from '../domain/todaySummary'
@@ -55,7 +56,10 @@ export function TodayScreen() {
         )}
       </header>
       {progress.next && (
-        <HeroCard session={progress.next} resume={snapshot?.sessionId === progress.next.id} />
+        <HeroCard
+          session={effectiveSession(program, progress.next.id, logs)?.session ?? progress.next}
+          resume={snapshot?.sessionId === progress.next.id}
+        />
       )}
       <WeekStrip week={week} nextLabel={nextLabel} />
       <PhaseCard progress={progress} fractions={weekFractions(program, logs, WEEKS)} />

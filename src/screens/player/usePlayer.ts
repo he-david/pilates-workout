@@ -21,9 +21,15 @@ type Simple = Exclude<PlayerAction, { type: 'restore' }>['type']
  * Player state machine wired to the clock, snapshot storage, sound and wake lock.
  * The only place (with the Player screen) that touches platform/.
  */
-export function usePlayer(session: ProgramSession) {
+export function usePlayer(
+  session: ProgramSession,
+  easierPreselected: readonly string[] = [],
+  harderSwapped: readonly string[] = [],
+) {
   const navigate = useNavigate()
-  const [state, dispatch] = useReducer(playerReducer, session, createPlayer)
+  const [state, dispatch] = useReducer(playerReducer, session, (s: ProgramSession) =>
+    createPlayer(s, easierPreselected, harderSwapped),
+  )
   const [now, setNow] = useState(() => Date.now())
   const snapshot = useSnapshot()
   const ready = snapshot !== undefined

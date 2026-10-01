@@ -119,3 +119,25 @@ describe('logged progress (real Dexie logs)', () => {
     expect(within(box).getByText(/1\. hét: .*könnyítéssel/)).toBeInTheDocument()
   })
 })
+
+describe('adaptive prescription on the overview', () => {
+  beforeEach(async () => {
+    await db.logs.clear()
+    await db.settings.clear()
+  })
+
+  it('shows shorter holds with the Módosítva badge after a 5 rating', async () => {
+    for (const [i, id] of ['w01-a', 'w01-b', 'w01-c', 'w02-a'].entries()) {
+      await saveLog(log(id, new Date(2026, 8, 20 + i, 9), { rating: 5 }))
+    }
+    await renderAt('/session/w02-b')
+    expect(screen.getAllByText('Módosítva').length).toBeGreaterThan(0)
+    expect(screen.getByText(/az adagok maradtak/)).toBeInTheDocument()
+  })
+
+  it('leaves later sessions as authored', async () => {
+    await saveLog(log('w01-a', new Date(2026, 8, 20, 9), { rating: 5 }))
+    await renderAt('/session/w03-b')
+    expect(screen.queryByText('Módosítva')).toBeNull()
+  })
+})

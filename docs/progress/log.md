@@ -155,3 +155,11 @@ Format:
 - Followed plan table (overrides orchestrator notes): 1 bump +1 rep/+5 s main items (generic ceilings 30 reps/180 s; counted items like Hundred skipped); 2 = latest rating 2 and ≥2 rating-2 logs same program week → harder variant of first 2 non-new main exercises; 4 → easier preselected on new main items; 5 → previous same-slot doses if lower, holds −20% (5 s steps, 15 s floor).
 - Added (plan silent): assessment sessions never modified; no history → no change.
 - T25: apply only to nextSession; pass previousSameSlot; Exercise harder/easier are text only → map harderSwapped/easierPreselected to variant text.
+
+## 2026-10-01 · T25 · Apply prescription in overview and player · done
+- `domain/effectiveSession.ts`: prescribe only for nextSession, else plain. Used by Today hero, overview, exercise detail and player (player waits for logs, builds steps from effective session).
+- Overview: pink "Módosítva" badges (same style as "Új"), note box under header, row variant line "Könnyítés:/Nehezítés: <text>". Growth badges now time-only ("+N mp") per design — resolves T12 follow-up.
+- Player: Könnyítés card on easierPreselected, Nehezítés card on harderSwapped (added after review: otherwise pullForward had no effect in the workout). Preselected easier logged in usedEasier only for completed items; harder variant display-only (not logged).
+- Dev: `?devDone=N&devRating=1..5` (sessionStorage per tab; `?devDone=0` clears).
+- Validator pass: rating 5 → w01-b plank 3×25 → 3×20 mp with badge + note, player 20 mp; rating 4 → Könnyítés on new items, usedEasier logged; rating 1 → bump; non-next sessions unchanged. pullForward covered by component test only.
+- Edge: snapshot restore after session logged elsewhere would rebuild authored steps (practically unreachable).
