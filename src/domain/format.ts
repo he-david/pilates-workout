@@ -1,4 +1,4 @@
-import type { Dose } from './types'
+import type { Dose, RepUnit } from './types'
 
 const DAYS_LONG = ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'] as const
 const DAYS_SHORT = ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'] as const
@@ -17,13 +17,35 @@ const MONTHS = [
   'december',
 ] as const
 
-/** "8 ismétlés", "8 ismétlés oldalanként", "45 mp", "2 × 30 mp" */
-export function doseLabel(dose: Dose): string {
-  if (dose.kind === 'reps') {
-    const base = `${dose.reps} ismétlés`
-    return dose.perSide ? `${base} oldalanként` : base
-  }
+function wholeMinutes(dose: Extract<Dose, { kind: 'time' }>): number | undefined {
+  const single = !dose.sets || dose.sets <= 1
+  return single && dose.seconds >= 60 && dose.seconds % 60 === 0 ? dose.seconds / 60 : undefined
+}
+
+function timeLabel(dose: Extract<Dose, { kind: 'time' }>): string {
+  const minutes = wholeMinutes(dose)
+  if (minutes !== undefined) return `${minutes} perc`
   return dose.sets && dose.sets > 1 ? `${dose.sets} × ${dose.seconds} mp` : `${dose.seconds} mp`
+}
+
+/**
+ * "8 ismétlés", "8 ismétlés oldalanként", "100 számolás", "45 mp", "2 × 30 mp", "8 perc".
+ * `unit` is the exercise's repUnit and overrides the per-side wording.
+ */
+export function doseLabel(dose: Dose, unit?: RepUnit): string {
+  if (dose.kind === 'time') return timeLabel(dose)
+  if (unit === 'count') return `${dose.reps} számolás`
+  if (unit === 'direction') return `${dose.reps} irányonként`
+  const base = `${dose.reps} ismétlés`
+  return dose.perSide ? `${base} oldalanként` : base
+}
+
+/** Compact list form: "8 ism.", "8 / oldal", "5 / irány", "100 számolás", "3 × 35 mp", "2 perc". */
+export function doseShort(dose: Dose, unit?: RepUnit): string {
+  if (dose.kind === 'time') return timeLabel(dose)
+  if (unit === 'count') return `${dose.reps} számolás`
+  if (unit === 'direction') return `${dose.reps} / irány`
+  return dose.perSide ? `${dose.reps} / oldal` : `${dose.reps} ism.`
 }
 
 /** Whole minutes, rounded: "50 perc" */

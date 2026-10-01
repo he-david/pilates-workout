@@ -3,6 +3,7 @@ import type { Exercise } from '../../domain/types'
 export const propExercises: Exercise[] = [
   {
     id: 'ball-hundred',
+    repUnit: 'count',
     nameHu: 'Százas labdával',
     nameEn: 'The Hundred with Ball',
     focus: ['Has', 'combbelső', 'légzés'],
@@ -108,6 +109,7 @@ export const propExercises: Exercise[] = [
   },
   {
     id: 'band-leg-circles',
+    repUnit: 'direction',
     nameHu: 'Lábkörzés szalaggal',
     nameEn: 'Leg Circles with Band',
     focus: ['Csípő', 'törzsstabilitás'],

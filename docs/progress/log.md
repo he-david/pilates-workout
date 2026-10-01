@@ -80,3 +80,9 @@ Format:
 - Validator fail round 1 (major): done sessions lacked line-through (`no-underline` on same Link overrode it) → moved to inner span. Re-check pass.
 - Intentional: session rows 44px (design 32px) for tap targets.
 - Note: theme `text-base` = 14px (not Tailwind default 16px) — keep in mind for inputs (≥16px rule).
+
+## 2026-10-01 · T12 · Session overview screen · done
+- `screens/SessionScreen` + `session/{BlockBar,BlockList}`; pure `domain/sessionOverview.ts` (buildOverview, difficulty = ceil(week/12×5), doseGrowth vs same slot last week).
+- Dose display: new `doseShort` ("8 ism.", "8 / oldal", "5 / irány", "100 számolás", "3 × 35 mp", "8 perc"); optional `Exercise.repUnit` (count/direction) set on hundred, ball-hundred, single-leg-circles, band-leg-circles. Whole minutes render "N perc".
+- "Előnézet" → first exercise detail; all rows link to `/exercise/:id?session=`; sticky bottom bar with safe-area; not-found state.
+- Validator pass. Minor follow-up: "+1 ism." growth badges on 9 rows of w03-b (design shows only "Új" + "+5 mp") — screen busier than design; reconsider (e.g. show only time growth / first growth) with T25 "Módosítva" badges.

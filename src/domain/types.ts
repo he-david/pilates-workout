@@ -1,5 +1,7 @@
 export type Equipment = 'mat' | 'ball' | 'ring' | 'band' | 'weights'
 
+export type RepUnit = 'count' | 'direction'
+
 export type Exercise = {
   id: string
   nameHu: string
@@ -13,6 +15,8 @@ export type Exercise = {
   cue: string
   /** e.g. "3 le · 3 fel" */
   tempo?: string
+  /** How a rep dose is counted when it is not plain repetitions: "100 számolás", "5 / irány". */
+  repUnit?: RepUnit
   media?: string
 }
 

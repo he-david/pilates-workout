@@ -4,6 +4,7 @@ import {
   dayNameLong,
   dayNameShort,
   doseLabel,
+  doseShort,
   durationLabel,
   minutesLabel,
   minutesShort,
@@ -22,6 +23,34 @@ describe('doseLabel', () => {
   ]
   it.each(cases)('%j -> %s', (dose, expected) => {
     expect(doseLabel(dose)).toBe(expected)
+  })
+})
+
+describe('doseLabel units and minutes', () => {
+  it('renders count and direction units', () => {
+    expect(doseLabel({ kind: 'reps', reps: 100 }, 'count')).toBe('100 számolás')
+    expect(doseLabel({ kind: 'reps', reps: 5, perSide: true }, 'direction')).toBe('5 irányonként')
+  })
+  it('renders whole minutes as perc, others unchanged', () => {
+    expect(doseLabel({ kind: 'time', seconds: 480 })).toBe('8 perc')
+    expect(doseLabel({ kind: 'time', seconds: 120 })).toBe('2 perc')
+    expect(doseLabel({ kind: 'time', seconds: 90 })).toBe('90 mp')
+    expect(doseLabel({ kind: 'time', seconds: 60, sets: 2 })).toBe('2 × 60 mp')
+  })
+})
+
+describe('doseShort', () => {
+  it.each([
+    [{ kind: 'reps', reps: 8 }, undefined, '8 ism.'],
+    [{ kind: 'reps', reps: 8, perSide: true }, undefined, '8 / oldal'],
+    [{ kind: 'reps', reps: 5, perSide: true }, 'direction', '5 / irány'],
+    [{ kind: 'reps', reps: 100 }, 'count', '100 számolás'],
+    [{ kind: 'time', seconds: 120 }, undefined, '2 perc'],
+    [{ kind: 'time', seconds: 480 }, undefined, '8 perc'],
+    [{ kind: 'time', seconds: 45 }, undefined, '45 mp'],
+    [{ kind: 'time', seconds: 35, sets: 3 }, undefined, '3 × 35 mp'],
+  ] as const)('%j %s -> %s', (dose, unit, expected) => {
+    expect(doseShort(dose, unit)).toBe(expected)
   })
 })
 

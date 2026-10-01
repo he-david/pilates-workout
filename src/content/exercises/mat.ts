@@ -3,6 +3,7 @@ import type { Exercise } from '../../domain/types'
 export const matExercises: Exercise[] = [
   {
     id: 'hundred',
+    repUnit: 'count',
     nameHu: 'Százas',
     nameEn: 'The Hundred',
     focus: ['Has', 'légzés', 'állóképesség'],
@@ -47,6 +48,7 @@ export const matExercises: Exercise[] = [
   },
   {
     id: 'single-leg-circles',
+    repUnit: 'direction',
     nameHu: 'Egylábas körzés',
     nameEn: 'Single Leg Circles',
     focus: ['Csípő', 'törzsstabilitás'],

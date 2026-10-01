@@ -72,7 +72,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Per `02-program.dc.html`: header, overall progress, 3 phase cards, expandable week rows with sessions (done / today / upcoming), assessment week row, phase 2–3 highlights. Tap session → `/session/:id`.
   - Commit: `feat(program): build 12-week program screen`
 
-- [ ] **T12** · ui · Session overview screen · UI
+- [x] **T12** · ui · Session overview screen · UI
   - Per `03-session-overview.dc.html`: back header, title block, stats (minutes, exercises, difficulty, equipment), 8'/34'/8' block bar, warm-up / main / cool-down lists (number, Hungarian + English name, dose, "Új" badge), "Előnézet" and "Indítás" buttons. Tap exercise → `/exercise/:id?session=…`.
   - Commit: `feat(overview): build session overview screen`
 
