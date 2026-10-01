@@ -38,3 +38,10 @@ Format:
 - `src/ui/`: Icon (16 inline SVGs from designs), BottomNav, Card, Button/ButtonLink (primary = accent bg, 54px, r16), Chip, Ring. Placeholder screens with titles.
 - Validator pass: nav computed styles match 07-log design, active state follows route, no horizontal scroll.
 - Validator minor / follow-up: `/favicon.ico` 404 in console → fixed by T05 icons.
+
+## 2026-10-01 · T05 · PWA, icons, update banner, deploy docs · done
+- vite-plugin-pwa 1.3 (works with Vite 8), registerType prompt; manifest Tónus/hu/standalone, theme #8ec9ee, bg #eef5fb. Icons generated from `public/logo.svg` (64/192/512, maskable, apple-touch 180, favicon.ico). Precache 40 entries incl. fonts.
+- SW hook in `src/platform/useAppUpdate.ts`, presentational `ui/UpdateBanner`, glue `screens/AppUpdateBanner` mounted in app.
+- `docs/deploy.md`: Cloudflare Pages, iPhone install, M1 checklist.
+- Validator pass on preview: manifest/icons 200, SW activated, offline reload of /program and /log renders with font, console clean, favicon 404 gone.
+- Follow-up: update banner only testable by deploying two builds (check on device).

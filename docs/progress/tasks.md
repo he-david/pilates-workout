@@ -34,7 +34,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Done when: gates pass; validator: bottom nav matches design, navigation works, no console errors.
   - Commit: `feat(ui): add app shell, routes and ui primitives`
 
-- [ ] **T05** · infra · PWA, icons, update banner, deploy docs
+- [x] **T05** · infra · PWA, icons, update banner, deploy docs
   - `vite-plugin-pwa` (registerType `prompt`): manifest name "Tónus", lang hu, `display: standalone`, theme/background colours from tokens (baby blue), icons generated with `@vite-pwa/assets-generator` from an SVG logo in `public/` (incl. 180×180 `apple-touch-icon`). iOS meta: `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style: default`, title.
   - Precache all assets incl. fonts → works offline after first load.
   - "Új verzió – frissítés" banner component shown when a new SW is waiting.
