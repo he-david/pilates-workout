@@ -91,7 +91,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - `src/data/db.ts`: Dexie v1 schema (`logs`, `settings`, `player`); `src/data/player.ts`: save/load/clear snapshot; `src/data/settings.ts`: get/init settings (start date, training days Mon/Thu/Sat, reminder 18:30); call `navigator.storage.persist()` via `platform/`. Tests with `fake-indexeddb`.
   - Commit: `feat(data): add dexie schema and player resume store`
 
-- [ ] **T16** · platform · Wake lock and sound
+- [x] **T16** · platform · Wake lock and sound
   - `src/platform/wakeLock.ts` (request, re-acquire on `visibilitychange`, muted looping-video fallback), `src/platform/sound.ts` (Web Audio unlock on first tap, 3-2-1 beeps, end chime), `src/platform/visibility.ts` helper. Unit tests with mocks where feasible.
   - Commit: `feat(platform): add wake lock and web audio cues`
 

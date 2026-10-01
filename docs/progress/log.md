@@ -105,3 +105,7 @@ Format:
 - `data/db.ts` Dexie v1: logs `++id, sessionId, finishedAt`; settings `id` (single row); player out-of-line key `active`. `data/settings.ts` getSettings / idempotent initSettings(today) / saveSettings; `data/player.ts` save/load/clear snapshot + `useSnapshot()` (undefined loading, null none).
 - `platform/storage.ts` requestPersistence (feature-detected, never throws), called once in main.tsx.
 - Follow-up T18: useSettings/useLogs still stubs; nothing calls initSettings at app start yet → wire in T18 (start date must be persisted on first run).
+
+## 2026-10-01 · T16 · Wake lock and sound · done
+- `platform/wakeLock.ts` createWakeLock() {acquire, release, status: native|fallback|none}, idempotent, re-acquire on visible; `useWakeLock(active)` hook. `platform/sound.ts` unlockAudio() (call from Indítás tap), beep('tick'|'go'), chime() — synthesised oscillator tones. `platform/visibility.ts` onVisible/onHidden/isVisible.
+- Fallback video uses 2×2 canvas.captureStream() (no ffmpeg → no mp4 asset). TODO: verify on iPhone (M3 manual check); if screen still sleeps without native wake lock, add tiny looping mp4 to public/.
