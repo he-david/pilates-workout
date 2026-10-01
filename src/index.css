@@ -1,6 +1,102 @@
 @import 'tailwindcss';
+@import '@fontsource/plus-jakarta-sans/latin-400.css';
+@import '@fontsource/plus-jakarta-sans/latin-500.css';
+@import '@fontsource/plus-jakarta-sans/latin-600.css';
+@import '@fontsource/plus-jakarta-sans/latin-700.css';
+@import '@fontsource/plus-jakarta-sans/latin-800.css';
+@import '@fontsource/plus-jakarta-sans/latin-ext-400.css';
+@import '@fontsource/plus-jakarta-sans/latin-ext-500.css';
+@import '@fontsource/plus-jakarta-sans/latin-ext-600.css';
+@import '@fontsource/plus-jakarta-sans/latin-ext-700.css';
+@import '@fontsource/plus-jakarta-sans/latin-ext-800.css';
+
+/* Design tokens: see docs/design/tokens.md */
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  --color-bg: #eef5fb;
+  --color-bg-tint: #e3f2fc;
+  --color-surface: #ffffff;
+  --color-surface-muted: #e4eef7;
+  --color-border: #d6e3ef;
+  --color-border-strong: #c2d2e3;
+  --color-border-dashed: #b5c6d9;
+  --color-divider: #c9e2f5;
+  --color-track: #dce7f2;
+  --color-bar-empty: #cfe3f3;
+
+  --color-ink: #16233a;
+  --color-ink-soft: #364559;
+  --color-ink-body: #3f5675;
+  --color-ink-muted: #4f5f75;
+  --color-ink-faint: #7e8da3;
+
+  --color-accent: #8ec9ee;
+  --color-accent-ink: #405a6b;
+  --color-accent-soft: #8ec9ee40;
+  --color-accent-light: #b3dcf5;
+  --color-accent-deep: #5faee3;
+  --color-lavender: #c3cdf2;
+
+  --color-pink: #f6bed1;
+  --color-pink-soft: #fbe1ea;
+  --color-pink-tint: #fbe4ec;
+  --color-pink-border: #f4b6cb;
+  --color-pink-bar: #f1a9c0;
+  --color-pink-strong: #e98dae;
+  --color-streak: #d9759a;
+  --color-streak-ink: #b04673;
+  --color-warn-ink: #9c3d63;
+  --color-warn-deep: #6e2a47;
+
+  --color-link: #2b6ca3;
+  --color-link-hover: #1d4e7a;
+
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
+  --radius-2xl: 18px;
+  --radius-3xl: 20px;
+  --radius-4xl: 24px;
+
+  --text-2xs: 10px;
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-md: 15px;
+  --text-lg: 16px;
+  --text-xl: 17px;
+  --text-2xl: 22px;
+  --text-3xl: 28px;
+  --text-4xl: 30px;
+  --text-timer: 54px;
+
+  --tracking-tight-display: -0.02em;
+  --tracking-label: 0.05em;
+  --tracking-label-wide: 0.06em;
+}
 
 html,
 body {
+  min-height: 100dvh;
   overscroll-behavior: none;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+button,
+[role='button'],
+a {
+  touch-action: manipulation;
 }

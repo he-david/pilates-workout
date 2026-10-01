@@ -22,3 +22,9 @@ Format:
 - JSX via `oxc: { jsx: { runtime: 'automatic' } }`; `@vitejs/plugin-react` not added (not on allowed list) → no fast refresh in dev. Ask user if wanted.
 - `@eslint/js` added as part of eslint flat config; `globals` package avoided.
 - Build warns harmless "use client" MODULE_LEVEL_DIRECTIVE from react-router.
+
+## 2026-10-01 · T02 · Design tokens and font · done
+- `docs/design/tokens.md`: 29 colour literals mapped to roles, radii, type scale, spacing; designs use no shadows. Mapped into Tailwind `@theme` in `src/index.css`.
+- accent-ink `#405A6B` / accent-soft `#8EC9EE40` derived per task (computed in design, not literal).
+- One-off radii (5/6/12/22 px) and sizes (11/18/21/24 px) kept as arbitrary values, documented in tokens.md.
+- Plus Jakarta Sans 400–800 latin + latin-ext self-hosted via @fontsource (10 woff2 in build).

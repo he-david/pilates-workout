@@ -17,7 +17,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Done when: all four gates pass; `npm run dev` serves a page.
   - Commit: `build(infra): scaffold vite react ts tailwind project`
 
-- [ ] **T02** · ui · Design tokens and font
+- [x] **T02** · ui · Design tokens and font
   - Extract colours, radii, spacing, type scale, shadows from all `docs/design/*.dc.html` into `docs/design/tokens.md` (name each colour by role: bg, surface, border, ink, ink-muted, accent `#8EC9EE`, accentInk = accent×0.45 = `#405A6B`, accentSoft = accent+`40`, pink/streak, link…). Map them into the Tailwind `@theme` in `src/index.css`.
   - Self-host Plus Jakarta Sans 400–800 latin + latin-ext via `@fontsource/plus-jakarta-sans`. Base styles: `100dvh`, `overscroll-behavior: none`, `touch-action: manipulation` on buttons, body bg/ink from tokens.
   - Done when: gates pass; tokens.md complete.
