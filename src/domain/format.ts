@@ -91,3 +91,8 @@ export function monthName(monthIndex: number): string {
 export function dateHeader(date: Date): string {
   return `${dayNameLong(date.getDay())}, ${monthName(date.getMonth())} ${date.getDate()}.`
 }
+
+/** "október 1." */
+export function shortDate(date: Date): string {
+  return `${monthName(date.getMonth())} ${date.getDate()}.`
+}

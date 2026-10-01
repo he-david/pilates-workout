@@ -78,6 +78,13 @@ export function nextSession(
   return program.find((s) => !done.has(s.id))
 }
 
+/** Most recent log of a session (it may have been done more than once); undefined if never. */
+export function lastLogOf(sessionId: string, logs: readonly SessionLog[]): SessionLog | undefined {
+  return logs
+    .filter((l) => l.sessionId === sessionId)
+    .sort((a, b) => b.finishedAt.localeCompare(a.finishedAt))[0]
+}
+
 export function sessionStatus(
   session: ProgramSession,
   program: readonly ProgramSession[],

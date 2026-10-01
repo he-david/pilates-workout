@@ -110,7 +110,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Per `06-finish.dc.html`: "Szép munka!", duration / exercises / streak stats, difficulty rating 1–5 (Nagyon könnyű · Könnyű · Pont jó · Nehéz · Túl nehéz with hints), areas chips (Has, Hát, …), note textarea (≥16px), "Mentés a naplóba" → saveLog, clear player snapshot, go to Today.
   - Commit: `feat(finish): build finish screen and save session log`
 
-- [ ] **T20** · ui · Wire logs into Today, Program, Overview · UI
+- [x] **T20** · ui · Wire logs into Today, Program, Overview · UI
   - Done states, next session = first without log, week strip, n / 36 counts, streak pill, "Te legutóbb" on exercise detail.
   - Commit: `feat(ui): show logged progress across screens`
 

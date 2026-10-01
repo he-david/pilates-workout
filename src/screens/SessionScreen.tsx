@@ -1,6 +1,9 @@
 import { useLocation, useNavigate, useParams } from 'react-router'
 import { exercises } from '../content/exercises'
 import { getSession, program } from '../content/program'
+import { useLogs, useToday } from '../data'
+import { shortDate } from '../domain/format'
+import { lastLogOf } from '../domain/schedule'
 import { buildOverview } from '../domain/sessionOverview'
 import { previousSameSlot } from '../domain/todaySummary'
 import { ButtonLink, Chip, Icon } from '../ui'
@@ -42,7 +45,11 @@ function NotFound() {
 export function SessionScreen() {
   const { id = '' } = useParams()
   const session = getSession(id)
+  const today = useToday()
+  const logs = useLogs(today)
   if (!session) return <NotFound />
+  if (!logs) return null
+  const doneLog = lastLogOf(session.id, logs)
 
   const o = buildOverview(session, previousSameSlot(program, session), exercises)
   const firstId = o.blocks[0]?.rows[0]?.exerciseId
@@ -57,6 +64,12 @@ export function SessionScreen() {
           </div>
           <h1 className="text-4xl font-extrabold tracking-tight-display">{o.title}</h1>
           <div className="mt-1.5 flex flex-wrap gap-2">
+            {doneLog && (
+              <Chip tone="pink">
+                <Icon name="check" size={12} />
+                <span className="ml-1">Kész · {shortDate(new Date(doneLog.finishedAt))}</span>
+              </Chip>
+            )}
             <Chip>{o.minutes}</Chip>
             <Chip>{o.exerciseCount} gyakorlat</Chip>
             <Chip>Nehézség {o.difficulty} / 5</Chip>
@@ -80,7 +93,7 @@ export function SessionScreen() {
         )}
         <ButtonLink to={`/player/${session.id}`} className="grow-[2]">
           <Icon name="play" size={18} />
-          <span>Indítás</span>
+          <span>{doneLog ? 'Újra' : 'Indítás'}</span>
         </ButtonLink>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  shortDate,
   dateHeader,
   dayNameLong,
   dayNameShort,
@@ -105,5 +106,11 @@ describe('names', () => {
   it('dateHeader', () => {
     expect(dateHeader(new Date(2026, 9, 1))).toBe('Csütörtök, október 1.')
     expect(dateHeader(new Date(2026, 0, 31))).toBe('Szombat, január 31.')
+  })
+})
+
+describe('shortDate', () => {
+  it('formats month and day', () => {
+    expect(shortDate(new Date(2026, 9, 1))).toBe('október 1.')
   })
 })

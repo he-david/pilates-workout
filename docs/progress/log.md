@@ -128,3 +128,8 @@ Format:
 - Missing/mismatched router state → redirect to `/`. "Pont jó" preselected per design; areas start EMPTY (design sample shows "Has" selected — not copied, would bias logs). Textarea 16px. Save: saveLog → clearSnapshot → navigate('/', replace), double-tap guarded. Re-doing a session adds another log.
 - Validator pass: log saved with ő/ű intact, snapshot cleared, Today advances to w01-b, 1/36, streak 1.
 - Minor: save button not pinned to bottom (page scrolls, 998px). Follow-up question for user: a session ended immediately via "Edzés befejezése" (0 exercises) still counts as done and advances the program — consider requiring ≥1 completed step or a warning.
+
+## 2026-10-01 · T20 · Wire logs into Today, Program, Overview · done
+- Audit: Today/Program/Exercise already correct on live Dexie logs; now covered by 8 integration tests (`tests/loggedProgress.test.tsx`, real saveLog, no dev seed). Edge cases: session logged twice counts once, non-training-day log harmless, unknown sessionId ignored, 36/36 → "Végigcsináltad a programot".
+- New: `schedule.lastLogOf`, `format.shortDate`; SessionScreen waits for logs, shows pink "✓ Kész · október 1." chip and "Újra" button for a logged session (design 03 has no done state).
+- Validator pass on real flow (skip ≠ completed confirmed); reminder toggle persists across reload.

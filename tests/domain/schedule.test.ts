@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   currentStreak,
+  lastLogOf,
   nextSession,
   programProgress,
   sessionStatus,
@@ -204,5 +205,25 @@ describe('currentStreak', () => {
     const days = ['2026-10-22', '2026-10-24', '2026-10-26', '2026-10-29', '2026-10-31']
     const logs = days.map((d, i) => log(`s${i}`, d))
     expect(currentStreak(s, logs, at('2026-11-01'))).toBe(5)
+  })
+})
+
+describe('lastLogOf', () => {
+  const l = (sessionId: string, day: string): SessionLog => ({
+    sessionId,
+    startedAt: `${day}T10:00:00.000Z`,
+    finishedAt: `${day}T11:00:00.000Z`,
+    durationSec: 3000,
+    completed: [],
+    usedEasier: [],
+    rating: 3,
+    areas: [],
+  })
+  it('returns undefined without a log', () => {
+    expect(lastLogOf('a', [l('b', '2026-10-01')])).toBeUndefined()
+  })
+  it('picks the latest of repeated logs', () => {
+    const logs = [l('a', '2026-10-05'), l('a', '2026-10-01'), l('b', '2026-10-09')]
+    expect(lastLogOf('a', logs)?.finishedAt).toBe('2026-10-05T11:00:00.000Z')
   })
 })
