@@ -28,3 +28,7 @@ Format:
 - accent-ink `#405A6B` / accent-soft `#8EC9EE40` derived per task (computed in design, not literal).
 - One-off radii (5/6/12/22 px) and sizes (11/18/21/24 px) kept as arbitrary values, documented in tokens.md.
 - Plus Jakarta Sans 400–800 latin + latin-ext self-hosted via @fontsource (10 woff2 in build).
+
+## 2026-10-01 · T03 · Reference screenshots · done
+- 7 boards captured to `docs/design/screens/0N-*.png` (390 CSS px, 2x). 03/04 re-captured via 600×1700 viewport + element screenshot after first attempt cropped.
+- Minor: Today/Program boards cut bottom nav at board edge (design board height). Use 07-log.png for full nav reference (Ma / Program / Napló).

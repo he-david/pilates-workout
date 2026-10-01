@@ -23,7 +23,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
   - Done when: gates pass; tokens.md complete.
   - Commit: `feat(ui): add design tokens and self-hosted font`
 
-- [ ] **T03** · validate · Reference screenshots of the design · UI
+- [x] **T03** · validate · Reference screenshots of the design · UI
   - ui-validator only (no implementer): capture the 7 boards of `design.html` into `docs/design/screens/0N-*.png` (see ui-validator "Special task").
   - Done when: 7 PNGs exist and look like the design.
   - Commit: `docs(design): add reference screenshots of the 7 screens`
