@@ -192,3 +192,9 @@ Format:
 - OPEN user decisions: (1) timed hold skipped via "Következő" doesn't count as completed — give credit after partial time? (2) session ended immediately with 0 exercises still counts as done and advances program. (3) HUMAN REVIEW deferred by user: exercises (T07) + program (T08), incl. w03-b equipment "Matrac" vs design "Matrac + kis labda".
 - iPhone manual checks M1–M6 pending (see tasks.md), incl. wake-lock fallback (T16) and Web Share/.ics import (T26/T27).
 - Servers stopped. Restart: `npm run dev -- --port 5173 --strictPort`.
+
+## 2026-10-02 · T29 · README and handover · done
+- `README.md`: summary, stack, commands + definition of done, architecture map (checked against src/ and tests/), key rules, deploy (links docs/deploy.md), iPhone install, backup + .ics reminder, dev helpers (`?devDone`/`?devRating`, dev builds only), content review note, M1–M6 checklist, open decisions.
+- Orchestrator verified .ics facts (18:30, PT50M, 10 min alarm, COUNT=36) against `platform/calendar.ts`.
+- HUMAN REVIEW still open: exercises (T07) + program (T08) content, w03-b equipment.
+- Backlog complete. Remaining: user decisions (skipped hold credit, 0-exercise finish) and iPhone manual checks M1–M6.

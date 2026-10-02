@@ -149,7 +149,7 @@ Design files: `docs/design/01-today` · `02-program` · `03-session-overview` ·
 - [x] **T28** · validate · Final UI audit · UI
   - ui-validator on all 7 screens vs reference screenshots + console + mobile basics + offline (preview build, SW). Implementer fixes majors (`fix(ui): …` commit).
 
-- [ ] **T29** · docs · README and handover
+- [x] **T29** · docs · README and handover
   - `README.md`: what it is, commands, architecture map, deploy, iPhone install, manual checklists M1–M6, content review note.
   - Commit: `docs: add readme with deploy and install guide`
 
